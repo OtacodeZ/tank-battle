@@ -1,4 +1,4 @@
-// Background.java
+package main.java.com.tankbattle.ui;// Background.java
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 

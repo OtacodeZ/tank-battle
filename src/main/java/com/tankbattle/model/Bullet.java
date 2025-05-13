@@ -1,3 +1,5 @@
+package main.java.com.tankbattle.model;
+
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 

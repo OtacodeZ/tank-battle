@@ -1,4 +1,4 @@
-//TIP 要<b>运行</b>代码，请按 <shortcut actionId="Run"/> 或
+package main.java.com.tankbattle.app;//TIP 要<b>运行</b>代码，请按 <shortcut actionId="Run"/> 或
 // 点击装订区域中的 <icon src="AllIcons.Actions.Execute"/> 图标。
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -8,13 +8,16 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import main.java.com.tankbattle.ui.Background;
+import main.java.com.tankbattle.model.Tank;
+import main.resources.config.ImagePath;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class Main extends Application {
-    private int sceneWid=800;
-    private int sceneHei=600;
+    final private int sceneWid=800;
+    final private int sceneHei=600;
 
 
 
@@ -38,7 +41,7 @@ public class Main extends Application {
         // Background and Tank
         Background bg=new Background();
 
-        Tank tank=new Tank(350,500,5,ImagePath.TANK_IMG,50);
+        Tank tank=new Tank(350,500,2, ImagePath.TANK_IMG,50);
 
         //interactKeyboard();
         Set<KeyCode> keysPressed = new HashSet<>();
