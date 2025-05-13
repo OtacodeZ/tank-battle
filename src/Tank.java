@@ -2,6 +2,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 
+import java.util.Set;
+
 public class Tank {
     public int x,y,speed;
     public Image image;
@@ -25,23 +27,18 @@ public class Tank {
         gc.drawImage(this.image,this.x,this.y,this.imageWid,this.imageWid*imgHei/imgWid);
     }
 
-    public void move(KeyCode code, int sceneWid, int sceneHei){
-        switch (code) {
-            case UP:
-                y -= speed;  // 上移
-                break;
-            case DOWN:
-                y += speed;  // 下移
-                break;
-            case LEFT:
-                x -= speed;  // 左移
-                break;
-            case RIGHT:
-                x += speed;  // 右移
-                break;
-            default:
-                break;
-
+    public void move(Set<KeyCode> keysPressed, int sceneWid, int sceneHei){
+        if (keysPressed.contains(KeyCode.UP)) {
+            y -= speed;  // 上移
+        }
+        if (keysPressed.contains(KeyCode.DOWN)) {
+            y += speed;  // 下移
+        }
+        if (keysPressed.contains(KeyCode.LEFT)) {
+            x -= speed;  // 左移
+        }
+        if (keysPressed.contains(KeyCode.RIGHT)) {
+            x += speed;  // 右移
         }
         double imgWid=this.image.getWidth();
         double imgHei=this.image.getHeight();
