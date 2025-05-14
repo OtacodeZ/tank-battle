@@ -30,21 +30,17 @@ public class Tank {
         double imageHei=this.imageWid*imgHei/imgWid;
         gc.save();
 
-// 移动坐标系到你想旋转的中心（例如图像中心）
         gc.translate((x + this.imageWid / 2.0), y +imageHei / 2 );
 
-// 旋转（角度单位是度）
-        gc.rotate((3-this.dir)*45); // 旋转90度
+        gc.rotate((3-this.dir)*45);
 
-// 绘制图像（注意：这里从-宽/2, -高/2 开始绘制，因为中心点已经变了）
         gc.drawImage(this.image, -(this.imageWid / 2.0), -(imageHei / 2),this.imageWid,imageHei);
 
-// 恢复状态
+
         gc.restore();
 
 
-        //END
-        //gc.drawImage(this.image,inputX,inputY,this.imageWid,this.imageWid*imgHei/imgWid);
+        //遗留：没有转向时：gc.drawImage(this.image,inputX,inputY,this.imageWid,this.imageWid*imgHei/imgWid);
     }
 
     public void move(Set<KeyCode> keysPressed, int sceneWid, int sceneHei){
