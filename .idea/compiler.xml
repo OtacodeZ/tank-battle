@@ -9,8 +9,5 @@
         <module name="tank-battle" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="tankbattle" target="24" />
-    </bytecodeTargetLevel>
   </component>
 </project>
