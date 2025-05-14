@@ -34,8 +34,17 @@ public class Bullet {
         gc.fillOval(x, y, 6, 10);  // 使用椭圆形代表子弹
     }
 
-    public boolean isOffScreen() {
-        return y < -10;
+    public boolean isOffScreen(int screenX,int screenY) {
+        if( x<0||
+            y<0||
+            x>screenX||
+            y>screenY){
+
+            return true;
+        }else {
+            return false;
+        }
+
     }
 }
 

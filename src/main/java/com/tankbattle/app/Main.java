@@ -82,7 +82,7 @@ public class Main extends Application {
                 for (Bullet bullet : bullets) {
                     bullet.draw(gc);
                 }
-                bullets.removeIf(Bullet::isOffScreen);
+                bullets.removeIf(b -> b.isOffScreen(sceneWid,sceneHei));
             }
         };
         timer.start();
