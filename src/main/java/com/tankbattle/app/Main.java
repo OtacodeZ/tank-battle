@@ -1,5 +1,4 @@
-package main.java.com.tankbattle.app;//TIP 要<b>运行</b>代码，请按 <shortcut actionId="Run"/> 或
-// 点击装订区域中的 <icon src="AllIcons.Actions.Execute"/> 图标。
+package main.java.com.tankbattle.app;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -8,8 +7,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import main.java.com.tankbattle.ui.Background;
-import main.java.com.tankbattle.model.Tank;
+import com.tankbattle.ui.Background;
+import com.tankbattle.model.Tank;
 import main.resources.config.ImagePath;
 
 import java.util.HashSet;

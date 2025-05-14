@@ -1,4 +1,4 @@
-package main.java.com.tankbattle.model;
+package com.tankbattle.model;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
