@@ -55,7 +55,7 @@ public class Main extends Application {
             public void handle(long now) {
                 tank.move(keysPressed,sceneWid,sceneHei);
                 bg.draw(gc,sceneWid,sceneHei);
-                tank.draw(gc);
+                tank.draw(gc, tank.x, tank.y);
 
             }
         };

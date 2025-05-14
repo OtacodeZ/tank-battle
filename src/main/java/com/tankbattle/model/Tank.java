@@ -10,9 +10,9 @@ public class Tank {
     public int x,y,speed;
     public Image image;
     public int imageWid;
-
+    public int dir;//方向，逆时针数共1-8方向，默认为3 （向上）
     public Tank(){
-
+        this.dir=3;
     }
     public Tank(int x,int y,int speed,String TANK_IMG,int imageWid){
         this.x=x;
@@ -20,13 +20,31 @@ public class Tank {
         this.speed=speed;
         this.image=new Image(TANK_IMG);
         this.imageWid=imageWid;
+        this.dir=3;
     }
 
 
-    public void draw(GraphicsContext gc){
+    public void draw(GraphicsContext gc,int inputX,int inputY){
         double imgWid=this.image.getWidth();
         double imgHei=this.image.getHeight();
-        gc.drawImage(this.image,this.x,this.y,this.imageWid,this.imageWid*imgHei/imgWid);
+        double imageHei=this.imageWid*imgHei/imgWid;
+        gc.save();
+
+// 移动坐标系到你想旋转的中心（例如图像中心）
+        gc.translate((x + this.imageWid / 2.0), y +imageHei / 2 );
+
+// 旋转（角度单位是度）
+        gc.rotate((3-this.dir)*45); // 旋转90度
+
+// 绘制图像（注意：这里从-宽/2, -高/2 开始绘制，因为中心点已经变了）
+        gc.drawImage(this.image, -(this.imageWid / 2.0), -(imageHei / 2),this.imageWid,imageHei);
+
+// 恢复状态
+        gc.restore();
+
+
+        //END
+        //gc.drawImage(this.image,inputX,inputY,this.imageWid,this.imageWid*imgHei/imgWid);
     }
 
     public void move(Set<KeyCode> keysPressed, int sceneWid, int sceneHei){
@@ -42,10 +60,52 @@ public class Tank {
         if (keysPressed.contains(KeyCode.RIGHT)) {
             x += speed;  // 右移
         }
+
+        this.dir=decideDir(keysPressed);
+
+
         double imgWid=this.image.getWidth();
         double imgHei=this.image.getHeight();
         x=Math.max(0, Math.min(sceneWid-this.imageWid, x));
         y=Math.max(0, Math.min((int)(sceneHei-this.imageWid*imgHei/imgWid),y));
+    }
+
+    private int decideDir(Set<KeyCode> keysPressed){
+        int dir=this.dir;
+        if(keysPressed.contains(KeyCode.UP)){
+            dir=3;
+            if(keysPressed.contains(KeyCode.RIGHT)){
+                dir=2;
+            }else {
+                if(keysPressed.contains(KeyCode.LEFT)){
+                    dir=4;
+                }else{
+                    dir=3;
+                }
+            }
+        }else {
+            if (keysPressed.contains(KeyCode.DOWN)){
+                dir=7;
+                if(keysPressed.contains(KeyCode.RIGHT)){
+                    dir=8;
+                }else {
+                    if(keysPressed.contains(KeyCode.LEFT)){
+                        dir=6;
+                    }else{
+                        dir=7;
+                    }
+                }
+            }else {
+                if(keysPressed.contains(KeyCode.RIGHT)){
+                    dir=1;
+                }else {
+                    if(keysPressed.contains(KeyCode.LEFT)){
+                        dir=5;
+                    }
+                }
+            }
+        }
+        return dir;
     }
 
 }
