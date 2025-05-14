@@ -96,8 +96,8 @@ public class Main extends Application {
 
     }
     private void fireBullet(TankGamerA tankA) {
-        // 创建一颗新子弹（从坦克中心顶部发出）
-        double bulletX = tankA.x + tankA.imageWid/2.0;  // 中心偏移
+        // 创建一颗新子弹
+        double bulletX = tankA.x + tankA.imageWid/2.0;  
         double bulletY = tankA.y +tankA.imageHei/2.0;
         bullets.add(new Bullet(bulletX, bulletY,tankA.dir));
     }
