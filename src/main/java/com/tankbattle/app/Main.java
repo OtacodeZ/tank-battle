@@ -1,4 +1,4 @@
-package main.java.com.tankbattle.app;
+package com.tankbattle.app;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -9,7 +9,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import com.tankbattle.ui.Background;
 import com.tankbattle.model.Tank;
-import main.resources.config.ImagePath;
+import resource.config.ImagePath;
 
 import java.util.HashSet;
 import java.util.Set;
