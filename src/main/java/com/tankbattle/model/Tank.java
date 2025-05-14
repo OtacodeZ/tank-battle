@@ -25,20 +25,18 @@ public class Tank {
 
 
     public void draw(GraphicsContext gc,int inputX,int inputY){
+        //原始尺寸
         double imgWid=this.image.getWidth();
         double imgHei=this.image.getHeight();
+
+        //缩放后尺寸
         double imageHei=this.imageWid*imgHei/imgWid;
+
         gc.save();
-
         gc.translate((x + this.imageWid / 2.0), y +imageHei / 2 );
-
         gc.rotate((3-this.dir)*45);
-
         gc.drawImage(this.image, -(this.imageWid / 2.0), -(imageHei / 2),this.imageWid,imageHei);
-
-
         gc.restore();
-
 
         //遗留：没有转向时：gc.drawImage(this.image,inputX,inputY,this.imageWid,this.imageWid*imgHei/imgWid);
     }
