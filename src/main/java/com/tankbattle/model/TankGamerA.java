@@ -9,7 +9,7 @@ public class TankGamerA extends Tank{
     public TankGamerA(int x,int y,int speed,String TANK_IMG,int imageWid){
         super(x,y,speed,TANK_IMG,imageWid);
     }
-    public void draw(GraphicsContext gc, int inputX, int inputY){
+    public void draw(GraphicsContext gc){
         //原始尺寸
         double imgWid=this.image.getWidth();
         double imgHei=this.image.getHeight();

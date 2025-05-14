@@ -1,5 +1,6 @@
 package com.tankbattle.app;
 import com.tankbattle.model.TankGamerA;
+import com.tankbattle.model.TankGamerB;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -41,7 +42,8 @@ public class Main extends Application {
         // Background and Tank
         Background bg=new Background();
 
-        TankGamerA tank=new TankGamerA(350,500,2, ImagePath.TANK_IMG,50);
+        TankGamerA tankA=new TankGamerA(350,500,2, ImagePath.TANK_IMG,50);
+        TankGamerB tankB=new TankGamerB(150,500,2, ImagePath.TANK_IMG,50);
 
         //interactKeyboard();
         Set<KeyCode> keysPressed = new HashSet<>();
@@ -54,10 +56,13 @@ public class Main extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                tank.move(keysPressed,sceneWid,sceneHei);
                 bg.draw(gc,sceneWid,sceneHei);
-                tank.draw(gc, tank.x, tank.y);
 
+                tankA.move(keysPressed,sceneWid,sceneHei);
+                tankA.draw(gc);
+
+                tankB.move(keysPressed,sceneWid,sceneHei);
+                tankB.draw(gc);
             }
         };
         timer.start();
