@@ -15,7 +15,7 @@ public class TankGamerA extends Tank{
         double imgHei=this.image.getHeight();
 
         //缩放后尺寸
-        double imageHei=this.imageWid*imgHei/imgWid;
+        this.imageHei=this.imageWid*imgHei/imgWid;
 
         gc.save();
         gc.translate((x + this.imageWid / 2.0), y +imageHei / 2 );

@@ -9,8 +9,13 @@ import java.util.Set;
 public class Tank {
     public int x,y,speed;
     public Image image;
-    public int imageWid;
+
     public int dir;//方向，逆时针数共1-8方向，默认为3 （向上）
+    //缩放后尺寸
+    public int imageWid;
+    public double imageHei;
+
+
     public Tank(){
         this.dir=3;
     }

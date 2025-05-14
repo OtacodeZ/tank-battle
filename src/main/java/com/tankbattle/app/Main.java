@@ -1,4 +1,5 @@
 package com.tankbattle.app;
+import com.tankbattle.model.Bullet;
 import com.tankbattle.model.TankGamerA;
 import com.tankbattle.model.TankGamerB;
 import javafx.animation.AnimationTimer;
@@ -8,19 +9,22 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import com.tankbattle.ui.Background;
 import com.tankbattle.model.Tank;
 import resource.config.ImagePath;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Main extends Application {
     final private int sceneWid=800;
     final private int sceneHei=600;
 
-
+    private final List<Bullet> bullets = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -52,6 +56,13 @@ public class Main extends Application {
         scene.setOnKeyReleased(event ->
                 keysPressed.remove(event.getCode()));
 
+        scene.setOnKeyPressed(event -> {
+            keysPressed.add(event.getCode());
+            // 按下空格键发射子弹
+            if (event.getCode() == KeyCode.SPACE) {
+                fireBullet(tankA);
+            }
+        });
         //动画
         AnimationTimer timer = new AnimationTimer() {
             @Override
@@ -61,8 +72,17 @@ public class Main extends Application {
                 tankA.move(keysPressed,sceneWid,sceneHei);
                 tankA.draw(gc);
 
+                gc.setFill(Color.RED);
+                gc.fillOval(tankA.x, tankA.y, 6, 10);
+
                 tankB.move(keysPressed,sceneWid,sceneHei);
                 tankB.draw(gc);
+
+                bullets.forEach(Bullet::move);
+                for (Bullet bullet : bullets) {
+                    bullet.draw(gc);
+                }
+                bullets.removeIf(Bullet::isOffScreen);
             }
         };
         timer.start();
@@ -75,6 +95,11 @@ public class Main extends Application {
 
 
     }
-
+    private void fireBullet(TankGamerA tankA) {
+        // 创建一颗新子弹（从坦克中心顶部发出）
+        double bulletX = tankA.x + tankA.imageWid/2.0;  // 中心偏移
+        double bulletY = tankA.y +tankA.imageHei/2.0;
+        bullets.add(new Bullet(bulletX, bulletY,tankA.dir));
+    }
 
 }
