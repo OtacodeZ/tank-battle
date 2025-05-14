@@ -1,4 +1,5 @@
 package com.tankbattle.app;
+import com.tankbattle.model.TankGamerA;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -40,7 +41,7 @@ public class Main extends Application {
         // Background and Tank
         Background bg=new Background();
 
-        Tank tank=new Tank(350,500,2, ImagePath.TANK_IMG,50);
+        TankGamerA tank=new TankGamerA(350,500,2, ImagePath.TANK_IMG,50);
 
         //interactKeyboard();
         Set<KeyCode> keysPressed = new HashSet<>();
