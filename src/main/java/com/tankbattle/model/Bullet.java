@@ -8,14 +8,15 @@ import java.util.List;
 import java.util.Set;
 
 public class Bullet {
-    private double x;
-    private double y;
+    public double x;
+    public double y;
     private final double speed = 7;
     public int bulletDir;
     private String BULLET_IMG= ImagePath.BULLET_IMG;
     private Image image=new Image(BULLET_IMG,true);
-    private int imageWid=100;
-    private double imageHei;
+    public int imageWid=10;
+    public double imageHei;
+    public int damage=1;
 
 
 

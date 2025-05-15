@@ -16,10 +16,7 @@ import com.tankbattle.ui.Background;
 import com.tankbattle.model.Tank;
 import resource.config.ImagePath;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Main extends Application {
 
@@ -99,6 +96,25 @@ public class Main extends Application {
                 bulletsB.forEach(Bullet::move);
                 Bullet.decideAndFireB(keysPressed,now,tankB,bulletsB);
                 bulletsB.removeIf(b -> b.isOffScreen(sceneWid,sceneHei));
+
+                //碰撞检测
+                Iterator<Bullet> iterator1 = bulletsA.iterator();
+                while (iterator1.hasNext()) {
+                    Bullet bullet = iterator1.next();
+                    if (tankB.intersects(bullet)) {
+                        iterator1.remove();
+                        tankB.HP.set(tankB.HP.get()-bullet.damage);
+                    }
+                }
+                Iterator<Bullet> iterator2 = bulletsB.iterator();
+                while (iterator2.hasNext()) {
+                    Bullet bullet = iterator2.next();
+                    if (tankA.intersects(bullet)) {
+                        iterator2.remove();
+                        tankA.HP.set(tankA.HP.get()-bullet.damage);
+                    }
+                }
+
             }
             private void draw(){
                 bg.draw(gc,sceneWid,sceneHei);

@@ -53,6 +53,21 @@ public  abstract class Tank {
     public abstract void move(Set<KeyCode> keysPressed, int sceneWid, int sceneHei);
     protected abstract int decideDir(Set<KeyCode> keysPressed);
 
-
+    public boolean intersects(Bullet rec){
+        double a1=this.x-imageWid/2,
+            b1=this.x+imageWid/2,
+            c1=this.y-imageHei/2,
+            d1=this.y+imageHei/2;
+        double a2=rec.x-rec.imageWid/2,
+                b2=rec.x+rec.imageWid/2,
+                c2=rec.y-rec.imageHei/2,
+                d2=rec.y+rec.imageHei/2;
+        if (Math.max(a1,a2)<=Math.min(b1,b2)&&
+            Math.max(c1,c2)<=Math.min(d1,d2)) {
+            return true;
+        }else {
+            return false;
+        }
+    }
 
 }
