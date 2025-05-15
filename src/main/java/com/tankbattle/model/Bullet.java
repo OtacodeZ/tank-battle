@@ -10,7 +10,7 @@ import java.util.Set;
 public class Bullet {
     public double x;
     public double y;
-    private final double speed = 7;
+    private final double speed = 10;
     public int bulletDir;
     private String BULLET_IMG= ImagePath.BULLET_IMG;
     private Image image=new Image(BULLET_IMG,true);

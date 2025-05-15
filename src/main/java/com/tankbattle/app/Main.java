@@ -39,9 +39,9 @@ public class Main extends Application {
         // Background and Tank
         Background bg=new Background();
 
-        Tank tankA=new TankGamerA(350,500,2, ImagePath.TANK_IMG,50);
+        Tank tankA=new TankGamerA(350,500,6, ImagePath.TANK_IMG,50);
         final List<Bullet> bulletsA = new ArrayList<>();
-        Tank tankB=new TankGamerB(150,500,2, ImagePath.TANK_IMG,50);
+        Tank tankB=new TankGamerB(150,500,6, ImagePath.TANK_IMG,50);
         final List<Bullet> bulletsB = new ArrayList<>();
 
 
