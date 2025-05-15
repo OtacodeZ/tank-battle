@@ -104,6 +104,7 @@ public class Main extends Application {
                 bg.draw(gc,sceneWid,sceneHei);
 
                 tankA.draw(gc);
+
                 tankB.draw(gc);
 
                 for (Bullet bullet : bulletsA) {
@@ -121,12 +122,12 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        sizeChangable(primaryStage,canvas);
+        sizeChangeable(primaryStage,canvas);
 
 
     }
 
-    private void sizeChangable(Stage stage,Canvas canvas){
+    private void sizeChangeable(Stage stage, Canvas canvas){
         //可全屏化
         stage.widthProperty().addListener((obs, oldVal, newVal) -> {
             sceneWid=newVal.intValue();

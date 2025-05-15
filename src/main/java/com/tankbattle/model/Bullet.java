@@ -59,8 +59,8 @@ public class Bullet {
 
             if (now - lastFireTime >= fireCooldown) {
 
-                double bulletX = tank.x + tank.imageWid/2.0;
-                double bulletY = tank.y +tank.imageHei/2.0;
+                double bulletX = tank.x ;
+                double bulletY = tank.y ;
                 bullets.add(new Bullet(bulletX, bulletY,tank.dir));// 发射子弹
                 lastFireTime = now;       // 记录本次时间
             }
@@ -71,8 +71,8 @@ public class Bullet {
 
             if (now - lastFireTime >= fireCooldown) {
 
-                double bulletX = tank.x + tank.imageWid/2.0;
-                double bulletY = tank.y +tank.imageHei/2.0;
+                double bulletX = tank.x ;
+                double bulletY = tank.y ;
                 bullets.add(new Bullet(bulletX, bulletY,tank.dir));// 发射子弹
                 lastFireTime = now;       // 记录本次时间
             }

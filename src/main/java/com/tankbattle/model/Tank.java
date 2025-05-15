@@ -9,7 +9,8 @@ import javafx.scene.input.KeyCode;
 import java.util.Set;
 
 public  abstract class Tank {
-    public int x,y,speed;
+    public int x,y; //图片中心坐标
+    public int speed;
     public Image image;
 
     public int dir;//方向，逆时针数共1-8方向，默认为3 （向上）
@@ -42,7 +43,7 @@ public  abstract class Tank {
         this.imageHei=this.imageWid*imgHei/imgWid;
 
         gc.save();
-        gc.translate((x + this.imageWid / 2.0), y +imageHei / 2 );
+        gc.translate(x,y);
         gc.rotate((3-this.dir)*45);
         gc.drawImage(this.image, -(this.imageWid / 2.0), -(imageHei / 2),this.imageWid,imageHei);
         gc.restore();
