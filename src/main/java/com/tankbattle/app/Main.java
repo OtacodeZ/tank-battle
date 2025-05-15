@@ -87,16 +87,37 @@ public class Main extends Application {
                 draw();
             }
             private void update(long now){
+                updateTankA(now);
+                updateTankB(now);
+            }
+            private void updateTankA(long now){
+                if(tankA.HP.get()<=0){
+                    return;
+                }
+
                 tankA.move(keysPressed,sceneWid,sceneHei);
                 bulletsA.forEach(Bullet::move);
                 Bullet.decideAndFireA(keysPressed,now,tankA,bulletsA);
                 bulletsA.removeIf(b -> b.isOffScreen(sceneWid,sceneHei));
+                //碰撞检测
+                Iterator<Bullet> iterator2 = bulletsB.iterator();
+                while (iterator2.hasNext()) {
+                    Bullet bullet = iterator2.next();
+                    if (tankA.intersects(bullet)) {
+                        iterator2.remove();
+                        tankA.HP.set(tankA.HP.get()-bullet.damage);
+                    }
+                }
+            }
+            private void updateTankB(long now){
+                if(tankB.HP.get()<=0){
+                    return;
+                }
 
                 tankB.move(keysPressed,sceneWid,sceneHei);
                 bulletsB.forEach(Bullet::move);
                 Bullet.decideAndFireB(keysPressed,now,tankB,bulletsB);
                 bulletsB.removeIf(b -> b.isOffScreen(sceneWid,sceneHei));
-
                 //碰撞检测
                 Iterator<Bullet> iterator1 = bulletsA.iterator();
                 while (iterator1.hasNext()) {
@@ -106,30 +127,33 @@ public class Main extends Application {
                         tankB.HP.set(tankB.HP.get()-bullet.damage);
                     }
                 }
-                Iterator<Bullet> iterator2 = bulletsB.iterator();
-                while (iterator2.hasNext()) {
-                    Bullet bullet = iterator2.next();
-                    if (tankA.intersects(bullet)) {
-                        iterator2.remove();
-                        tankA.HP.set(tankA.HP.get()-bullet.damage);
-                    }
-                }
-
             }
+
             private void draw(){
                 bg.draw(gc,sceneWid,sceneHei);
-
-                tankA.draw(gc);
-
-                tankB.draw(gc);
-
                 for (Bullet bullet : bulletsA) {
                     bullet.draw(gc);
                 }
                 for (Bullet bullet : bulletsB) {
                     bullet.draw(gc);
                 }
+                drawTankA();
+                drawTankB();
             }
+            private void drawTankA(){
+                if(tankA.HP.get()<=0){
+                    return;
+                }
+                tankA.draw(gc);
+            }
+            private void drawTankB(){
+                if(tankB.HP.get()<=0){
+                    return;
+                }
+                tankB.draw(gc);
+            }
+
+
         };
         timer.start();
 
