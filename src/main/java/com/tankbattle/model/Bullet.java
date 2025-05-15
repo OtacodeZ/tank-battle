@@ -1,7 +1,9 @@
 package com.tankbattle.model;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import resource.config.ImagePath;
 
 import java.util.List;
 import java.util.Set;
@@ -11,6 +13,11 @@ public class Bullet {
     private double y;
     private final double speed = 7;
     public int tankDir;
+    private String BULLET_IMG= ImagePath.BULLET_IMG;
+    private Image image=new Image(BULLET_IMG,true);
+    private int imageWid=20;
+    private double imageHei;
+
 
 
     public Bullet(double startX, double startY,int tankDir) {
@@ -34,8 +41,17 @@ public class Bullet {
     }
 
     public void draw(GraphicsContext gc) {
-        gc.setFill(Color.RED);
-        gc.fillOval(x, y, 6, 10);  // 使用椭圆形代表子弹
+        //原始尺寸
+        double imgWid=this.image.getWidth();
+        double imgHei=this.image.getHeight();
+        //缩放后尺寸
+        this.imageHei=this.imageWid*imgHei/imgWid;
+        gc.save();
+        gc.translate(x,y);
+        gc.rotate((3-tankDir)*45);
+        gc.drawImage(this.image, -(this.imageWid / 2.0), -(imageHei / 2),this.imageWid,imageHei);
+        gc.restore();
+
     }
 
     public boolean isOffScreen(int screenX,int screenY) {
