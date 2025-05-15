@@ -9,23 +9,9 @@ public class TankGamerA extends Tank{
     public TankGamerA(int x,int y,int speed,String TANK_IMG,int imageWid){
         super(x,y,speed,TANK_IMG,imageWid);
     }
-    public void draw(GraphicsContext gc){
-        //原始尺寸
-        double imgWid=this.image.getWidth();
-        double imgHei=this.image.getHeight();
 
-        //缩放后尺寸
-        this.imageHei=this.imageWid*imgHei/imgWid;
 
-        gc.save();
-        gc.translate((x + this.imageWid / 2.0), y +imageHei / 2 );
-        gc.rotate((3-this.dir)*45);
-        gc.drawImage(this.image, -(this.imageWid / 2.0), -(imageHei / 2),this.imageWid,imageHei);
-        gc.restore();
-
-        //遗留：没有转向时：gc.drawImage(this.image,inputX,inputY,this.imageWid,this.imageWid*imgHei/imgWid);
-    }
-
+    @Override
     public void move(Set<KeyCode> keysPressed, int sceneWid, int sceneHei){
         if (keysPressed.contains(KeyCode.UP)) {
             y -= speed;  // 上移
@@ -48,7 +34,7 @@ public class TankGamerA extends Tank{
         x=Math.max(0, Math.min(sceneWid-this.imageWid, x));
         y=Math.max(0, Math.min((int)(sceneHei-this.imageWid*imgHei/imgWid),y));
     }
-
+    @Override
     protected int decideDir(Set<KeyCode> keysPressed){
 
         int dir=this.dir;

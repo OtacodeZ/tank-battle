@@ -46,8 +46,8 @@ public class Main extends Application {
         // Background and Tank
         Background bg=new Background();
 
-        TankGamerA tankA=new TankGamerA(350,500,2, ImagePath.TANK_IMG,50);
-        TankGamerB tankB=new TankGamerB(150,500,2, ImagePath.TANK_IMG,50);
+        Tank tankA=new TankGamerA(350,500,2, ImagePath.TANK_IMG,50);
+        Tank tankB=new TankGamerB(150,500,2, ImagePath.TANK_IMG,50);
 
         //interactKeyboard();
         Set<KeyCode> keysPressed = new HashSet<>();
@@ -95,7 +95,7 @@ public class Main extends Application {
 
 
     }
-    private void fireBullet(TankGamerA tankA) {
+    private void fireBullet(Tank tankA) {
         // 创建一颗新子弹
         double bulletX = tankA.x + tankA.imageWid/2.0;  
         double bulletY = tankA.y +tankA.imageHei/2.0;
