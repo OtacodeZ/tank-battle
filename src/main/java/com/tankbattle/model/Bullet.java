@@ -2,7 +2,6 @@ package com.tankbattle.model;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Color;
 import resource.config.ImagePath;
 
 import java.util.List;
@@ -12,7 +11,7 @@ public class Bullet {
     private double x;
     private double y;
     private final double speed = 7;
-    public int tankDir;
+    public int bulletDir;
     private String BULLET_IMG= ImagePath.BULLET_IMG;
     private Image image=new Image(BULLET_IMG,true);
     private int imageWid=20;
@@ -23,11 +22,11 @@ public class Bullet {
     public Bullet(double startX, double startY,int tankDir) {
         this.x = startX;
         this.y = startY;
-        this.tankDir=tankDir;
+        this.bulletDir =tankDir;
     }
 
     public void move() {
-        switch (tankDir){
+        switch (bulletDir){
             case 1:x+=speed;break;
             case 2:x+=speed/1.4;y-=speed/1.4;break;
             case 3:y-=speed;break;
@@ -48,7 +47,7 @@ public class Bullet {
         this.imageHei=this.imageWid*imgHei/imgWid;
         gc.save();
         gc.translate(x,y);
-        gc.rotate((3-tankDir)*45);
+        gc.rotate((3- bulletDir)*45);
         gc.drawImage(this.image, -(this.imageWid / 2.0), -(imageHei / 2),this.imageWid,imageHei);
         gc.restore();
 
