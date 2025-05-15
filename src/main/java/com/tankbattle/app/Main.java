@@ -21,6 +21,11 @@ import java.util.List;
 import java.util.Set;
 
 public class Main extends Application {
+
+    long lastFireTime = 0; // 纳秒时间戳
+    final long fireCooldown = 100_000_000; // 500ms 冷却，单位是纳秒（ns）
+
+
     final private int sceneWid=800;
     final private int sceneHei=600;
 
@@ -56,22 +61,28 @@ public class Main extends Application {
         scene.setOnKeyReleased(event ->
                 keysPressed.remove(event.getCode()));
 
-        scene.setOnKeyPressed(event -> {
-            keysPressed.add(event.getCode());
-            // 按下空格键发射子弹
-            if (event.getCode() == KeyCode.SPACE) {
-                fireBullet(tankA);
-            }
-        });
+
         //动画
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
+
+
+                // 按下空格键发射子弹
+                if (keysPressed.contains(KeyCode.SPACE)) {
+
+                    if (now - lastFireTime >= fireCooldown) {
+                        fireBullet(tankA);         // 发射子弹
+                        lastFireTime = now;       // 记录本次时间
+                    }
+                }
+
                 bg.draw(gc,sceneWid,sceneHei);
 
                 tankA.move(keysPressed,sceneWid,sceneHei);
                 tankA.draw(gc);
 
+                //画子弹
                 gc.setFill(Color.RED);
                 gc.fillOval(tankA.x, tankA.y, 6, 10);
 
