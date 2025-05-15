@@ -1,5 +1,7 @@
 package com.tankbattle.model;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -14,10 +16,12 @@ public  abstract class Tank {
     //缩放后尺寸
     public int imageWid;
     public double imageHei;
+    public IntegerProperty HP = new SimpleIntegerProperty(100);
 
 
     public Tank(){
         this.dir=3;
+
     }
     public Tank(int x,int y,int speed,String TANK_IMG,int imageWid){
         this.x=x;
@@ -26,6 +30,7 @@ public  abstract class Tank {
         this.image=new Image(TANK_IMG);
         this.imageWid=imageWid;
         this.dir=3;
+
     }
 
     public void draw(GraphicsContext gc){
@@ -46,6 +51,7 @@ public  abstract class Tank {
     }
     public abstract void move(Set<KeyCode> keysPressed, int sceneWid, int sceneHei);
     protected abstract int decideDir(Set<KeyCode> keysPressed);
+
 
 
 }
