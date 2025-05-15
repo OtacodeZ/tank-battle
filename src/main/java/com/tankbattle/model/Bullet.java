@@ -1,6 +1,10 @@
 package com.tankbattle.model;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+
+import java.util.List;
+import java.util.Set;
 
 public class Bullet {
     private double x;
@@ -45,6 +49,34 @@ public class Bullet {
             return false;
         }
 
+    }
+    
+    static private long lastFireTime = 0; // 纳秒时间戳
+    final private static long fireCooldown = 100_000_000; // 100ms 冷却，单位是纳秒（ns）
+
+    static public void decideAndFireA(Set<KeyCode> keysPressed, long now, Tank tank, List<Bullet> bullets){
+        if (keysPressed.contains(KeyCode.SPACE)) {
+
+            if (now - lastFireTime >= fireCooldown) {
+
+                double bulletX = tank.x + tank.imageWid/2.0;
+                double bulletY = tank.y +tank.imageHei/2.0;
+                bullets.add(new Bullet(bulletX, bulletY,tank.dir));// 发射子弹
+                lastFireTime = now;       // 记录本次时间
+            }
+        }
+    }
+    static public void decideAndFireB(Set<KeyCode> keysPressed, long now, Tank tank, List<Bullet> bullets){
+        if (keysPressed.contains(KeyCode.E)) {
+
+            if (now - lastFireTime >= fireCooldown) {
+
+                double bulletX = tank.x + tank.imageWid/2.0;
+                double bulletY = tank.y +tank.imageHei/2.0;
+                bullets.add(new Bullet(bulletX, bulletY,tank.dir));// 发射子弹
+                lastFireTime = now;       // 记录本次时间
+            }
+        }
     }
 }
 

@@ -29,7 +29,7 @@ public class Main extends Application {
     final private int sceneWid=800;
     final private int sceneHei=600;
 
-    private final List<Bullet> bullets = new ArrayList<>();
+
 
     public static void main(String[] args) {
 
@@ -52,8 +52,10 @@ public class Main extends Application {
         Background bg=new Background();
 
         Tank tankA=new TankGamerA(350,500,2, ImagePath.TANK_IMG,50);
-        Tank tankB=new TankGamerB(150,500,2, ImagePath.TANK_IMG,50);
+        final List<Bullet> bulletsA = new ArrayList<>();
 
+        Tank tankB=new TankGamerB(150,500,2, ImagePath.TANK_IMG,50);
+        final List<Bullet> bulletsB = new ArrayList<>();
         //interactKeyboard();
         Set<KeyCode> keysPressed = new HashSet<>();
         scene.setOnKeyPressed(event ->
@@ -66,34 +68,32 @@ public class Main extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-
-
-                // 按下空格键发射子弹
-                if (keysPressed.contains(KeyCode.SPACE)) {
-
-                    if (now - lastFireTime >= fireCooldown) {
-                        fireBullet(tankA);         // 发射子弹
-                        lastFireTime = now;       // 记录本次时间
-                    }
-                }
-
-                bg.draw(gc,sceneWid,sceneHei);
-
+                //update
                 tankA.move(keysPressed,sceneWid,sceneHei);
-                tankA.draw(gc);
-
-                //画子弹
-                gc.setFill(Color.RED);
-                gc.fillOval(tankA.x, tankA.y, 6, 10);
+                bulletsA.forEach(Bullet::move);
+                Bullet.decideAndFireA(keysPressed,now,tankA,bulletsA);
+                bulletsA.removeIf(b -> b.isOffScreen(sceneWid,sceneHei));
 
                 tankB.move(keysPressed,sceneWid,sceneHei);
+                bulletsB.forEach(Bullet::move);
+                Bullet.decideAndFireB(keysPressed,now,tankB,bulletsB);
+                bulletsB.removeIf(b -> b.isOffScreen(sceneWid,sceneHei));
+
+
+                //draw
+                bg.draw(gc,sceneWid,sceneHei);
+
+                tankA.draw(gc);
                 tankB.draw(gc);
 
-                bullets.forEach(Bullet::move);
-                for (Bullet bullet : bullets) {
+                for (Bullet bullet : bulletsA) {
                     bullet.draw(gc);
                 }
-                bullets.removeIf(b -> b.isOffScreen(sceneWid,sceneHei));
+                for (Bullet bullet : bulletsB) {
+                    bullet.draw(gc);
+                }
+
+
             }
         };
         timer.start();
@@ -106,11 +106,6 @@ public class Main extends Application {
 
 
     }
-    private void fireBullet(Tank tankA) {
-        // 创建一颗新子弹
-        double bulletX = tankA.x + tankA.imageWid/2.0;  
-        double bulletY = tankA.y +tankA.imageHei/2.0;
-        bullets.add(new Bullet(bulletX, bulletY,tankA.dir));
-    }
+
 
 }
