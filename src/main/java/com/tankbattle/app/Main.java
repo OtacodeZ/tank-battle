@@ -22,12 +22,10 @@ import java.util.Set;
 
 public class Main extends Application {
 
-    long lastFireTime = 0; // 纳秒时间戳
-    final long fireCooldown = 100_000_000; // 500ms 冷却，单位是纳秒（ns）
 
 
-    final private int sceneWid=800;
-    final private int sceneHei=600;
+     private int sceneWid=800;
+     private int sceneHei=600;
 
 
 
@@ -68,7 +66,11 @@ public class Main extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                //update
+
+                update(now);
+                draw();
+            }
+            private void update(long now){
                 tankA.move(keysPressed,sceneWid,sceneHei);
                 bulletsA.forEach(Bullet::move);
                 Bullet.decideAndFireA(keysPressed,now,tankA,bulletsA);
@@ -78,9 +80,8 @@ public class Main extends Application {
                 bulletsB.forEach(Bullet::move);
                 Bullet.decideAndFireB(keysPressed,now,tankB,bulletsB);
                 bulletsB.removeIf(b -> b.isOffScreen(sceneWid,sceneHei));
-
-
-                //draw
+            }
+            private void draw(){
                 bg.draw(gc,sceneWid,sceneHei);
 
                 tankA.draw(gc);
@@ -92,8 +93,6 @@ public class Main extends Application {
                 for (Bullet bullet : bulletsB) {
                     bullet.draw(gc);
                 }
-
-
             }
         };
         timer.start();
@@ -103,8 +102,22 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
+        sizeChangable(primaryStage,canvas);
 
 
+    }
+
+    private void sizeChangable(Stage stage,Canvas canvas){
+        //可全屏化
+        stage.widthProperty().addListener((obs, oldVal, newVal) -> {
+            sceneWid=newVal.intValue();
+            canvas.setWidth(newVal.doubleValue());
+
+        });
+        stage.heightProperty().addListener((obs, oldVal, newVal) -> {
+            sceneHei=newVal.intValue();
+            canvas.setHeight(newVal.doubleValue());
+        });
     }
 
 
