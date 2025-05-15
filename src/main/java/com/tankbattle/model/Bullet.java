@@ -14,7 +14,7 @@ public class Bullet {
     public int bulletDir;
     private String BULLET_IMG= ImagePath.BULLET_IMG;
     private Image image=new Image(BULLET_IMG,true);
-    private int imageWid=20;
+    private int imageWid=100;
     private double imageHei;
 
 

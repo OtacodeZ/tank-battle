@@ -28,7 +28,7 @@ public  abstract class Tank {
         this.x=x;
         this.y=y;
         this.speed=speed;
-        this.image=new Image(TANK_IMG);
+        this.image=new Image(TANK_IMG,true);
         this.imageWid=imageWid;
         this.dir=3;
 
