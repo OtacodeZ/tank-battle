@@ -67,31 +67,44 @@ public class Bullet {
 
     }
     
-    static private long lastFireTime = 0; // 纳秒时间戳
+    static private long lastFireTimeA = 0; // 纳秒时间戳
     final private static long fireCooldown = 100_000_000; // 100ms 冷却，单位是纳秒（ns）
 
     static public void decideAndFireA(Set<KeyCode> keysPressed, long now, Tank tank, List<Bullet> bullets){
         if (keysPressed.contains(KeyCode.SPACE)) {
 
-            if (now - lastFireTime >= fireCooldown) {
+            if (now - lastFireTimeA >= fireCooldown) {
 
                 double bulletX = tank.x ;
                 double bulletY = tank.y ;
                 bullets.add(new Bullet(bulletX, bulletY,tank.dir));// 发射子弹
-                lastFireTime = now;       // 记录本次时间
+                lastFireTimeA = now;       // 记录本次时间
             }
         }
     }
+    static private long lastFireTimeB = 0;
     static public void decideAndFireB(Set<KeyCode> keysPressed, long now, Tank tank, List<Bullet> bullets){
         if (keysPressed.contains(KeyCode.E)) {
 
-            if (now - lastFireTime >= fireCooldown) {
+            if (now - lastFireTimeB >= fireCooldown) {
 
                 double bulletX = tank.x ;
                 double bulletY = tank.y ;
                 bullets.add(new Bullet(bulletX, bulletY,tank.dir));// 发射子弹
-                lastFireTime = now;       // 记录本次时间
+                lastFireTimeB = now;       // 记录本次时间
             }
+        }
+    }
+
+    final private static long fireCooldownE = 500_000_000;
+
+    static public void decideAndFireE(long now,Enemy enemy, List<Bullet> bullets){
+        if (now - enemy.lastFireTimeE >= fireCooldownE) {
+
+            double bulletX = enemy.x ;
+            double bulletY = enemy.y ;
+            bullets.add(new Bullet(bulletX, bulletY,enemy.dir));// 发射子弹
+            enemy.lastFireTimeE = now;       // 记录本次时间
         }
     }
 }

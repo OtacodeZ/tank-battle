@@ -17,7 +17,8 @@ public class Enemy {
     private Image image=new Image(ENEMY_IMG,true);
     public int imageWid=30;
     public double imageHei;
-    private int enemyDir=7;
+    public int dir=7;
+    public long lastFireTimeE =0;
 
     public Enemy(double x,double y ){
         this.x=x;
@@ -32,7 +33,7 @@ public class Enemy {
         this.imageHei=this.imageWid*imgHei/imgWid;
         gc.save();
         gc.translate(x,y);
-        gc.rotate((3- enemyDir)*45);
+        gc.rotate((3- dir)*45);
         gc.drawImage(this.image, -(this.imageWid / 2.0), -(imageHei / 2),this.imageWid,imageHei);
         gc.restore();
 
@@ -42,16 +43,16 @@ public class Enemy {
             this.y++;
     }
 
-    public static int temp=0;
-    public static void decideAndHenerate(List<Enemy> enemies){
-        if(temp<2){
-            double enemyX=30;
-            double enemyY=20;
-            enemies.add(new Enemy(enemyX,enemyY));
-            temp++;
+    private static long lastEnemySpawnTime=0;
+    final private static long enemySpawnInterval=1_000_000_000;
+
+    public static void decideAndSpawn(List<Enemy> enemies, long now){
+
+        if (now - lastEnemySpawnTime > enemySpawnInterval) {
+            double x = Math.random() * (800 - 40); // 屏幕宽度减去敌人宽度
+            enemies.add(new Enemy(x, 0));
+            lastEnemySpawnTime = now;
         }
-
-
     }
     public boolean ifLive(){
         if(

@@ -86,13 +86,20 @@ public class Main extends Application {
             private void update(long now){
                 updateTankA(now);
                 updateTankB(now);
-                updateEnemise();
+                updateEnemise(now);
 
             }
-            private void updateEnemise(){
-                Enemy.decideAndHenerate(enemies);
+            private void updateEnemise(long now){
+                Enemy.decideAndSpawn(enemies,now);
                 enemies.forEach(Enemy::move);
                 enemies.removeIf(enemy -> enemy.ifLive());
+                Iterator<Enemy> iteratorE3=enemies.iterator();
+                while (iteratorE3.hasNext()){
+                    Enemy enemy=iteratorE3.next();
+                    Bullet.decideAndFireE(now,enemy,bulletsEnemy);
+                }
+                bulletsEnemy.forEach(Bullet::move);
+
 
                 Iterator<Bullet> iteratorB = bulletsB.iterator();
                 while (iteratorB.hasNext()) {
@@ -140,6 +147,14 @@ public class Main extends Application {
                         tankA.HP.set(tankA.HP.get()-bullet.damage);
                     }
                 }
+                Iterator<Bullet> iteratorEB = bulletsEnemy.iterator();
+                while (iteratorEB.hasNext()) {
+                    Bullet bullet = iteratorEB.next();
+                    if (tankA.intersects(bullet)) {
+                        iteratorEB.remove();
+                        tankA.HP.set(tankA.HP.get()-bullet.damage);
+                    }
+                }
             }
             private void updateTankB(long now){
                 if(tankB.HP.get()<=0){
@@ -159,6 +174,14 @@ public class Main extends Application {
                         tankB.HP.set(tankB.HP.get()-bullet.damage);
                     }
                 }
+                Iterator<Bullet> iteratorEB = bulletsEnemy.iterator();
+                while (iteratorEB.hasNext()) {
+                    Bullet bullet = iteratorEB.next();
+                    if (tankB.intersects(bullet)) {
+                        iteratorEB.remove();
+                        tankB.HP.set(tankB.HP.get()-bullet.damage);
+                    }
+                }
             }
 
             private void draw(){
@@ -169,10 +192,15 @@ public class Main extends Application {
                 for (Bullet bullet : bulletsB) {
                     bullet.draw(gc);
                 }
+
                 //enemy
                 for(Enemy enemy:enemies){
                     enemy.draw(gc);
                 }
+                for (Bullet bullet : bulletsEnemy) {
+                    bullet.draw(gc);
+                }
+
 
                 drawTankA();
                 drawTankB();
