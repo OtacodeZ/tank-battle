@@ -18,6 +18,7 @@ public  abstract class Tank {
     public int imageWid;
     public double imageHei;
     public IntegerProperty HP = new SimpleIntegerProperty(20);
+    public final int HP_init=20;
 
 
     public Tank(){
@@ -44,7 +45,8 @@ public  abstract class Tank {
 
         gc.save();
         gc.translate(x,y);
-        gc.rotate((3-this.dir)*45);
+
+        gc.setGlobalAlpha((float)this.HP.get()/this.HP_init);
         gc.drawImage(this.image, -(this.imageWid / 2.0), -(imageHei / 2),this.imageWid,imageHei);
         gc.restore();
 
