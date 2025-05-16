@@ -1,7 +1,5 @@
 package com.tankbattle.app;
-import com.tankbattle.model.Bullet;
-import com.tankbattle.model.TankGamerA;
-import com.tankbattle.model.TankGamerB;
+import com.tankbattle.model.*;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
@@ -13,7 +11,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import com.tankbattle.ui.Background;
-import com.tankbattle.model.Tank;
 import resource.config.ImagePath;
 
 import java.util.*;
@@ -28,8 +25,6 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-
-
         launch(args);
     }
 
@@ -39,11 +34,13 @@ public class Main extends Application {
         // Background and Tank
         Background bg=new Background();
 
-        Tank tankA=new TankGamerA(350,500,6, ImagePath.TANK_IMG,50);
+        Tank tankA=new TankGamerA(350,500,3, ImagePath.TANK_IMG,50);
         final List<Bullet> bulletsA = new ArrayList<>();
-        Tank tankB=new TankGamerB(150,500,6, ImagePath.TANK_IMG,50);
+        Tank tankB=new TankGamerB(150,500,3, ImagePath.TANK_IMG,50);
         final List<Bullet> bulletsB = new ArrayList<>();
 
+        final List<Enemy> enemies=new ArrayList<>();
+        final List<Bullet> bulletsEnemy = new ArrayList<>();
 
         //画布与场景
         Canvas canvas=new Canvas(sceneWid,sceneHei);
@@ -89,7 +86,42 @@ public class Main extends Application {
             private void update(long now){
                 updateTankA(now);
                 updateTankB(now);
+                updateEnemise();
+
             }
+            private void updateEnemise(){
+                Enemy.decideAndHenerate(enemies);
+                enemies.forEach(Enemy::move);
+                enemies.removeIf(enemy -> enemy.ifLive());
+
+                Iterator<Bullet> iteratorB = bulletsB.iterator();
+                while (iteratorB.hasNext()) {
+                    Bullet bulletB = iteratorB.next();
+                    Iterator<Enemy> iteratorE1=enemies.iterator();
+                    while (iteratorE1.hasNext()){
+                        Enemy enemy=iteratorE1.next();
+                        if(enemy.intersects(bulletB)){
+                            iteratorB.remove();
+                            enemy.HP.set(enemy.HP.get()-bulletB.damage);
+                            break;
+                        }
+                    }
+                }
+                Iterator<Bullet> iteratorA = bulletsA.iterator();
+                while (iteratorA.hasNext()){
+                    Bullet bulletA=iteratorA.next();
+                    Iterator<Enemy> iteratorE2=enemies.iterator();
+                    while (iteratorE2.hasNext()){
+                        Enemy enemy=iteratorE2.next();
+                        if(enemy.intersects(bulletA)){
+                            iteratorA.remove();
+                            enemy.HP.set(enemy.HP.get()-bulletA.damage);
+                            break;
+                        }
+                    }
+                }
+            }
+
             private void updateTankA(long now){
                 if(tankA.HP.get()<=0){
                     return;
@@ -137,6 +169,11 @@ public class Main extends Application {
                 for (Bullet bullet : bulletsB) {
                     bullet.draw(gc);
                 }
+                //enemy
+                for(Enemy enemy:enemies){
+                    enemy.draw(gc);
+                }
+
                 drawTankA();
                 drawTankB();
             }
