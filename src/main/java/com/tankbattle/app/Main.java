@@ -92,8 +92,23 @@ public class Main extends Application {
             private void updateEnemise(long now){
                 //spawn move and remove
                 Enemy.decideAndSpawn(enemies,now);
-                enemies.forEach(Enemy::move);
+//                enemies.forEach(Enemy::move);
                 enemies.removeIf(enemy -> enemy.ifLive());
+
+
+                //changeDir
+                if(now%10000==0){
+                    Iterator<Enemy> iteratorE4=enemies.iterator();
+                    while (iteratorE4.hasNext()){
+                        Enemy enemy=iteratorE4.next();
+                        enemy.changeDir(tankA,tankB);
+                    }
+                }
+                Iterator<Enemy> iteratorE4=enemies.iterator();
+                while (iteratorE4.hasNext()){
+                    Enemy enemy=iteratorE4.next();
+                    enemy.move(tankA,tankB);
+                }
 
                 //bullet
                 Iterator<Enemy> iteratorE3=enemies.iterator();

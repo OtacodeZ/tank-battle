@@ -6,6 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import resource.config.ImagePath;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Random;
 
@@ -20,6 +21,8 @@ public class Enemy {
     public double imageHei;
     public int dir=7;
     public long lastFireTimeE =0;
+
+    private static double seeDistance=100000000;
 
     public Enemy(double x,double y ){
         this.x=x;
@@ -40,14 +43,47 @@ public class Enemy {
 
     }
 
-    public void move(){
-        Random random=new Random();
-        switch (1+random.nextInt(4)){
+    public void move(Tank tank1,Tank tank2){
+        switch (this.dir){
             case 1:x++;break;
-            case 2:y--;break;
-            case 3:x--;break;
-            case 4:y++;break;
+            case 2:x++;y--;break;
+            case 3:y--;break;
+            case 4:y--;x--;break;
+            case 5:x--;break;
+            case 6:x--;y++;break;
+            case 7:y++;break;
+            case 8:y++;x++;break;
+            default:break;
         }
+    }
+
+    public void changeDir(Tank tank1,Tank tank2){
+        int enemySeetank=0;
+        if( (Math.pow(tank1.x,tank1.x)
+                +
+             Math.pow(tank1.y,tank1.y) )<seeDistance){
+            enemySeetank=1;
+        }else if( (Math.pow(tank2.x,tank2.x)
+                +
+                Math.pow(tank2.y,tank2.y) )<seeDistance){
+            enemySeetank=2;
+
+        } else {
+            enemySeetank=0;
+        }
+
+        if(enemySeetank==1){
+            this.dir=-1;
+        }else if(enemySeetank==2){
+            this.dir=-2;
+        } else {
+            Random random=new Random();
+            this.dir=1+random.nextInt(4);
+        }
+
+
+
+
     }
 
     private static long lastEnemySpawnTime=0;
@@ -55,7 +91,7 @@ public class Enemy {
     public static void decideAndSpawn(List<Enemy> enemies, long now){
         if (now - lastEnemySpawnTime > enemySpawnInterval) {
             double x = Math.random() * (800 - 40); // 屏幕宽度减去敌人宽度
-            enemies.add(new Enemy(x, 0));
+            enemies.add(new Enemy(x, 100));
             lastEnemySpawnTime = now;
         }
     }
