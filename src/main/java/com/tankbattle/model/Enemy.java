@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import resource.config.ImagePath;
 
 import java.util.List;
+import java.util.Random;
 
 public class Enemy {
     public double x;
@@ -40,20 +41,25 @@ public class Enemy {
     }
 
     public void move(){
-            this.y++;
+        Random random=new Random();
+        switch (1+random.nextInt(4)){
+            case 1:x++;break;
+            case 2:y--;break;
+            case 3:x--;break;
+            case 4:y++;break;
+        }
     }
 
     private static long lastEnemySpawnTime=0;
     final private static long enemySpawnInterval=1_000_000_000;
-
     public static void decideAndSpawn(List<Enemy> enemies, long now){
-
         if (now - lastEnemySpawnTime > enemySpawnInterval) {
             double x = Math.random() * (800 - 40); // 屏幕宽度减去敌人宽度
             enemies.add(new Enemy(x, 0));
             lastEnemySpawnTime = now;
         }
     }
+
     public boolean ifLive(){
         if(
                 this.HP.get()<=0
@@ -63,6 +69,7 @@ public class Enemy {
             return false;
         }
     }
+
     public boolean intersects(Bullet rec){
         double a1=this.x-imageWid/2,
                 b1=this.x+imageWid/2,

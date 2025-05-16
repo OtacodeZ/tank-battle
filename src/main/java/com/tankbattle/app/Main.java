@@ -46,6 +46,7 @@ public class Main extends Application {
         Canvas canvas=new Canvas(sceneWid,sceneHei);
         GraphicsContext gc=canvas.getGraphicsContext2D();
         Group root = new Group(canvas);
+
         //HP display
         Text hpA =new Text();
         hpA.textProperty().bind(
@@ -87,12 +88,14 @@ public class Main extends Application {
                 updateTankA(now);
                 updateTankB(now);
                 updateEnemise(now);
-
             }
             private void updateEnemise(long now){
+                //spawn move and remove
                 Enemy.decideAndSpawn(enemies,now);
                 enemies.forEach(Enemy::move);
                 enemies.removeIf(enemy -> enemy.ifLive());
+
+                //bullet
                 Iterator<Enemy> iteratorE3=enemies.iterator();
                 while (iteratorE3.hasNext()){
                     Enemy enemy=iteratorE3.next();
@@ -100,7 +103,7 @@ public class Main extends Application {
                 }
                 bulletsEnemy.forEach(Bullet::move);
 
-
+                //碰撞检测
                 Iterator<Bullet> iteratorB = bulletsB.iterator();
                 while (iteratorB.hasNext()) {
                     Bullet bulletB = iteratorB.next();
@@ -128,13 +131,13 @@ public class Main extends Application {
                     }
                 }
             }
-
             private void updateTankA(long now){
                 if(tankA.HP.get()<=0){
                     return;
                 }
 
                 tankA.move(keysPressed,sceneWid,sceneHei);
+                //bullet
                 bulletsA.forEach(Bullet::move);
                 Bullet.decideAndFireA(keysPressed,now,tankA,bulletsA);
                 bulletsA.removeIf(b -> b.isOffScreen(sceneWid,sceneHei));
@@ -186,21 +189,20 @@ public class Main extends Application {
 
             private void draw(){
                 bg.draw(gc,sceneWid,sceneHei);
+                //bullet
                 for (Bullet bullet : bulletsA) {
                     bullet.draw(gc);
                 }
                 for (Bullet bullet : bulletsB) {
                     bullet.draw(gc);
                 }
-
+                for (Bullet bullet : bulletsEnemy) {
+                    bullet.draw(gc);
+                }
                 //enemy
                 for(Enemy enemy:enemies){
                     enemy.draw(gc);
                 }
-                for (Bullet bullet : bulletsEnemy) {
-                    bullet.draw(gc);
-                }
-
 
                 drawTankA();
                 drawTankB();

@@ -28,10 +28,8 @@ public class TankGamerB extends Tank{
         this.dir=decideDir(keysPressed);
 
 
-        double imgWid=this.image.getWidth();
-        double imgHei=this.image.getHeight();
-        x=Math.max(0, Math.min(sceneWid-this.imageWid, x));
-        y=Math.max(0, Math.min((int)(sceneHei-this.imageWid*imgHei/imgWid),y));
+        x=Math.max(this.imageWid/2, Math.min(sceneWid-this.imageWid/2, x));
+        y=Math.max((int)this.imageHei/2, Math.min((int)(sceneHei-this.imageHei/2),y));
     }
 
     @Override
