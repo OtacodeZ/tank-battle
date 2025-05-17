@@ -17,8 +17,9 @@ public  abstract class Tank {
     //缩放后尺寸
     public int imageWid;
     public double imageHei;
-    public IntegerProperty HP = new SimpleIntegerProperty(10000);
     public final int HP_init=20;
+    public IntegerProperty HP = new SimpleIntegerProperty(HP_init);
+
 
 
     public Tank(){

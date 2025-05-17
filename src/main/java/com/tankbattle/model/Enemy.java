@@ -29,7 +29,7 @@ public class Enemy {
     private int enemySeetank=0;
 
     private static double seeDistance=40000;//视野范围
-    private String ifOnpenViewCycle="No";//是否可视化enemy的索敌圈，若是，改为“on”
+    private String ifOnpenViewCycle="on";//是否可视化enemy的索敌圈，若是，改为“on”
 
     public Enemy(int x,int y ){
         this.x=x;
