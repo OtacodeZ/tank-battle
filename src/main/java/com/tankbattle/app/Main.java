@@ -10,8 +10,12 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
 import com.tankbattle.ui.Background;
+import resource.config.AudioPath;
 import resource.config.ImagePath;
+
+import javafx.scene.media.*;
 
 import java.util.*;
 //hhhhh
@@ -21,7 +25,8 @@ public class Main extends Application {
 
      private int sceneWid=800;
      private int sceneHei=600;
-
+    Media bgmMedia = new Media(AudioPath.BGM);
+    MediaPlayer bgmPlayer = new MediaPlayer(bgmMedia);
 
 
     public static void main(String[] args) {
@@ -31,9 +36,17 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        //BGM
+
+
+
+        bgmPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        bgmPlayer.setVolume(0.3);
+        bgmPlayer.play();
+
+
         // Background and Tank
         Background bg=new Background();
-
         Tank tankA=new TankGamerA(350,500,3, ImagePath.TANK_IMG,50);
         final List<Bullet> bulletsA = new ArrayList<>();
         Tank tankB=new TankGamerB(150,500,3, ImagePath.TANK_IMG,50);
@@ -128,6 +141,8 @@ public class Main extends Application {
                         if(enemy.intersects(bulletB)){
                             iteratorB.remove();
                             enemy.HP.set(enemy.HP.get()-bulletB.damage);
+                            playShootSound();
+
                             break;
                         }
                     }
@@ -141,6 +156,7 @@ public class Main extends Application {
                         if(enemy.intersects(bulletA)){
                             iteratorA.remove();
                             enemy.HP.set(enemy.HP.get()-bulletA.damage);
+                            playShootSound();
                             break;
                         }
                     }
@@ -261,6 +277,12 @@ public class Main extends Application {
             canvas.setHeight(newVal.doubleValue());
         });
     }
+    public void playShootSound() {
+        Media sound = new Media(AudioPath.SHOOT_voice);
+        MediaPlayer player = new MediaPlayer(sound);
+        player.play();
+        player.setOnEndOfMedia(() -> player.dispose());  // 播放完释放资源
 
+    }
 
 }

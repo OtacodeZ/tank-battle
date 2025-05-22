@@ -17,7 +17,7 @@ public class Enemy {
     public int x;
     public int y;
     public int speed=1;
-    public IntegerProperty HP=new SimpleIntegerProperty(1);
+    public IntegerProperty HP=new SimpleIntegerProperty(20);
     private String ENEMY_IMG= ImagePath.ENEMY_IMG;
     private Image image=new Image(ENEMY_IMG,true);
     public int imageWid=30;
