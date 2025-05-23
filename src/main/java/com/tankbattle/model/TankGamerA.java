@@ -1,18 +1,19 @@
 package com.tankbattle.model;
 
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 
+import java.util.Iterator;
 import java.util.Set;
 
-public class TankGamerA extends Tank{
-    public TankGamerA(int x,int y,int speed,String TANK_IMG,int imageWid){
-        super(x,y,speed,TANK_IMG,imageWid);
+public class TankGamerA extends Tank implements Collidable{
+    protected TankGamerA(int x, int y, double width, Image image, int speed) {
+        super(x, y, width, image, speed);
+        CollisionManager.collidables.add(this);
     }
 
 
-    @Override
-    public void move(Set<KeyCode> keysPressed, int sceneWid, int sceneHei){
+    protected void move(Set<KeyCode> keysPressed, int sceneWid, int sceneHei) {
         if (keysPressed.contains(KeyCode.UP)) {
             y -= speed;  // 上移
         }
@@ -29,12 +30,12 @@ public class TankGamerA extends Tank{
         this.dir=decideDir(keysPressed);
 
 
-        x=Math.max(this.imageWid/2, Math.min(sceneWid-this.imageWid/2, x));
-        y=Math.max((int)this.imageHei/2, Math.min((int)(sceneHei-this.imageHei/2),y));
+        x= (int) Math.max(this.width/2, Math.min(sceneWid-this.width/2, x));
+        y=Math.max((int)this.height/2, Math.min((int)(sceneHei-this.height/2),y));
     }
-    @Override
-    protected int decideDir(Set<KeyCode> keysPressed){
 
+
+    private int decideDir(Set<KeyCode> keysPressed) {
         int dir=this.dir;
         if(keysPressed.contains(KeyCode.UP)){
             dir=3;
@@ -70,5 +71,62 @@ public class TankGamerA extends Tank{
             }
         }
         return dir;
+    }
+
+
+
+
+
+    public void update(long now,Set<KeyCode> keysPressed,int sceneWid,int sceneHei){
+       if(this.HP.get()<=0){
+           this.x=-100;
+           this.y=-100;//HERE 具体值需调试，目的是把tank移到enemy检测不到的地方
+           return;
+       }
+       move(keysPressed,sceneWid,sceneHei);
+
+       Bullet.decideAndFireA(keysPressed,now,this,bullets);
+       bullets.forEach(Bullet::move);
+
+       //remove bullets
+        Iterator<Bullet> iterator=bullets.iterator();
+        while (iterator.hasNext()){
+            Bullet bullet=iterator.next();
+            if(bullet.isOffScreen(sceneWid,sceneHei)|| bullet.isDie()){
+                iterator.remove();
+                CollisionManager.collidables.remove(bullet);
+            }
+
+        }
+
+    }
+
+    @Override
+    public Rectangle getBounds() {
+        return this;
+    }
+
+
+    @Override
+    public void onCollide(Collidable other) {
+        if(other.getOwner()==this){
+            return;
+        }
+        switch (other.getType()){
+            case TANK :
+            case WALL:
+            case ENEMY:break;
+            case BULLET:this.HP.set(this.HP.get()-Bullet.damage);break;
+        }
+    }
+
+    @Override
+    public CollisionType getType() {
+        return CollisionType.TANK;
+    }
+
+    @Override
+    public Collidable getOwner() {
+        return null;
     }
 }

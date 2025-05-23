@@ -1,0 +1,49 @@
+package com.tankbattle.model;
+
+import javafx.scene.canvas.GraphicsContext;
+import resource.config.ImageManger;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+public  class EnemyManager {
+    final public static List<Enemy> enemies=new ArrayList<>();
+
+    public void update(long now,Tank tank1, Tank tank2,int sceneWid, int sceneHei){
+        //spawn move and remove
+        decideAndSpawn(enemies,now);
+        //enemies.forEach(Enemy::move);
+        enemies.removeIf(enemy -> enemy.ifDie());
+
+
+        Iterator<Enemy> iterator=enemies.iterator();
+        while (iterator.hasNext()){
+            Enemy enemy=iterator.next();
+            enemy.update(now,tank1,tank2,sceneWid,sceneHei);
+        }
+    }
+    public void draw(GraphicsContext gc){
+        for(Enemy enemy:enemies){
+            enemy.draw(gc);
+        }
+    }
+
+
+    private static long lastEnemySpawnTime=0;
+    final private static long enemySpawnInterval=1_000_000_000;
+    private int enemyHaveBeenSpawn=0;
+    private void decideAndSpawn(List<Enemy> enemies, long now){
+        if(enemyHaveBeenSpawn<1)
+        if (now - lastEnemySpawnTime > enemySpawnInterval) {
+            int x = (int)(Math.random() * (800 - 40));// 屏幕宽度减去敌人宽度
+            int y = (int)(Math.random() * (600 - 40));//HERE
+
+
+            enemies.add(new Enemy(x, y,50, ImageManger.enemy,1));
+//                protected Enemy(int x, int y, double width, Image image, int speed)
+            lastEnemySpawnTime = now;
+            enemyHaveBeenSpawn++;
+        }
+    }
+}
