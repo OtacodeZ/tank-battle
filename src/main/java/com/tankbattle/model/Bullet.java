@@ -1,33 +1,36 @@
 package com.tankbattle.model;
+
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import resource.config.ImagePath;
+import resource.config.ImageManger;
 
 import java.util.List;
 import java.util.Set;
 
-public class Bullet {
-    public double x;
-    public double y;
+public class Bullet extends Rectangle implements Collidable{
     private final double speed = 10;
-    public int bulletDir;
-    private String BULLET_IMG= ImagePath.BULLET_IMG;
-    private Image image=new Image(BULLET_IMG,true);
-    public int imageWid=10;
-    public double imageHei;
-    public int damage=1;
+    public int dir;
+    private Image image;
+    public static final int damage=1;
 
-
-
-    public Bullet(double startX, double startY,int tankDir) {
-        this.x = startX;
-        this.y = startY;
-        this.bulletDir =tankDir;
+    private Collidable owner;
+    @Override
+    public Collidable getOwner(){
+        return owner;
     }
 
+
+    public Bullet(int x, int y,Image image,int dir,Collidable owner) {
+        super(x, y, 10, 10*image.getHeight()/image.getWidth());
+        this.dir=dir;
+        this.image=image;
+        this.owner=owner;
+
+        CollisionManager.collidables.add(this);
+    }
     public void move() {
-        switch (bulletDir){
+        switch (dir){
             case 1:x+=speed;break;
             case 2:x+=speed/1.4;y-=speed/1.4;break;
             case 3:y-=speed;break;
@@ -39,26 +42,25 @@ public class Bullet {
             default:break;
         }
     }
-
     public void draw(GraphicsContext gc) {
         //原始尺寸
         double imgWid=this.image.getWidth();
         double imgHei=this.image.getHeight();
         //缩放后尺寸
-        this.imageHei=this.imageWid*imgHei/imgWid;
+        this.height=this.width*imgHei/imgWid;
         gc.save();
         gc.translate(x,y);
-        gc.rotate((3- bulletDir)*45);
-        gc.drawImage(this.image, -(this.imageWid / 2.0), -(imageHei / 2),this.imageWid,imageHei);
+        gc.rotate((3- dir)*45);
+        gc.drawImage(this.image, -(this.width / 2.0), -(height / 2),this.width,height);
         gc.restore();
 
     }
 
     public boolean isOffScreen(int screenX,int screenY) {
         if( x<0||
-            y<0||
-            x>screenX||
-            y>screenY){
+                y<0||
+                x>screenX||
+                y>screenY){
 
             return true;
         }else {
@@ -66,46 +68,60 @@ public class Bullet {
         }
 
     }
-    
-    static private long lastFireTimeA = 0; // 纳秒时间戳
-    final private static long fireCooldown = 100_000_000; // 100ms 冷却，单位是纳秒（ns）
 
-    static public void decideAndFireA(Set<KeyCode> keysPressed, long now, Tank tank, List<Bullet> bullets){
+
+    final private static long fireCooldown = 100_000_000;; // 100ms 冷却，单位是纳秒（ns）
+    static public void decideAndFireA(Set<KeyCode> keysPressed, long now, TankGamerA tank, List<Bullet> bullets){
         if (keysPressed.contains(KeyCode.SPACE)) {
-
-            if (now - lastFireTimeA >= fireCooldown) {
-
-                double bulletX = tank.x ;
-                double bulletY = tank.y ;
-                bullets.add(new Bullet(bulletX, bulletY,tank.dir));// 发射子弹
-                lastFireTimeA = now;       // 记录本次时间
+            if (now - tank.lastFireTime >= fireCooldown) {
+                bullets.add(new Bullet(tank.getX(), tank.getY(),ImageManger.bullet,tank.dir,tank));// 发射子弹
+                tank.lastFireTime = now;       // 记录本次时间
+                System.out.println("fire");
             }
         }
     }
-    static private long lastFireTimeB = 0;
-    static public void decideAndFireB(Set<KeyCode> keysPressed, long now, Tank tank, List<Bullet> bullets){
+    static public void decideAndFireB(Set<KeyCode> keysPressed, long now, TankGamerB tank, List<Bullet> bullets){
         if (keysPressed.contains(KeyCode.E)) {
-
-            if (now - lastFireTimeB >= fireCooldown) {
-
-                double bulletX = tank.x ;
-                double bulletY = tank.y ;
-                bullets.add(new Bullet(bulletX, bulletY,tank.dir));// 发射子弹
-                lastFireTimeB = now;       // 记录本次时间
+            if (now - tank.lastFireTime >= fireCooldown) {
+                bullets.add(new Bullet(tank.getX(), tank.getY(),ImageManger.bullet,tank.dir,tank));// 发射子弹
+                tank.lastFireTime = now;       // 记录本次时间
             }
         }
     }
 
     final private static long fireCooldownE = 500_000_000;
-
-    static public void decideAndFireE(long now,Enemy enemy, List<Bullet> bullets){
-        if (now - enemy.lastFireTimeE >= fireCooldownE) {
-
-            double bulletX = enemy.x ;
-            double bulletY = enemy.y ;
-            bullets.add(new Bullet(bulletX, bulletY,enemy.dir));// 发射子弹
-            enemy.lastFireTimeE = now;       // 记录本次时间
+    static public void decideAndFireE(long now, Enemy enemy, List<Bullet> bullets){
+        if (now - enemy.lastFireTime >= fireCooldownE) {
+            bullets.add(new Bullet(enemy.getX(), enemy.getY(),ImageManger.bullet,enemy.dir,enemy));// 发射子弹
+            enemy.lastFireTime = now;       // 记录本次时间
         }
     }
-}
 
+    @Override
+    public Rectangle getBounds() {
+        return this;
+    }
+
+    private String liveStatus="alive";//
+    @Override
+    public void onCollide(Collidable other) {
+        if(other==owner){
+            return;
+        }
+        switch (other.getType()){
+            case TANK :
+            case WALL:
+            case ENEMY:
+                liveStatus="die";break;
+            case BULLET:break;
+        }
+    }
+    public boolean isDie(){
+        return liveStatus.equals("die");
+    }
+
+    @Override
+    public CollisionType getType() {
+        return CollisionType.BULLET;
+    }
+}
