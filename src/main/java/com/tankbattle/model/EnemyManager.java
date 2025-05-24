@@ -14,13 +14,13 @@ public  class EnemyManager {
     public void update(long now,Tank tank1, Tank tank2,int sceneWid, int sceneHei){
         //spawn move and remove
         decideAndSpawn(enemies,now);
-        //enemies.forEach(Enemy::move);
-        enemies.removeIf(enemy -> enemy.ifDie());
-
-
         Iterator<Enemy> iterator=enemies.iterator();
         while (iterator.hasNext()){
             Enemy enemy=iterator.next();
+            if(enemy.ifDie()){
+                iterator.remove();
+                CollisionManager.collidables.remove(enemy);
+            }
             enemy.update(now,tank1,tank2,sceneWid,sceneHei);
         }
     }
