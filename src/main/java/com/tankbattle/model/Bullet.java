@@ -1,10 +1,11 @@
 package com.tankbattle.model;
 
+import com.tankbattle.app.Main;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import resource.config.ImageManger;
-
+import javafx.stage.Stage;
 import java.util.List;
 import java.util.Set;
 
@@ -42,13 +43,19 @@ public class Bullet extends Rectangle implements Collidable{
             default:break;
         }
     }
-    public void draw(GraphicsContext gc) {
+    public void draw(GraphicsContext gc,Stage stage) {
+        int windowWid = (int) stage.getWidth(); // 获取当前宽度
+        int windowHei = (int) stage.getHeight(); // 获取当前高度
+        double scaleX = windowWid / (double) Main.sceneWid;
+        double scaleY = windowHei / (double) Main.sceneHei;
+        gc.save();
+        gc.scale(scaleX,scaleY);
         //原始尺寸
         double imgWid=this.image.getWidth();
         double imgHei=this.image.getHeight();
         //缩放后尺寸
         this.height=this.width*imgHei/imgWid;
-        gc.save();
+
         gc.translate(x,y);
         gc.rotate((3- dir)*45);
         gc.drawImage(this.image, -(this.width / 2.0), -(height / 2),this.width,height);

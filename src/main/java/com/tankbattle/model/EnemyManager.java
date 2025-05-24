@@ -1,6 +1,7 @@
 package com.tankbattle.model;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.stage.Stage;
 import resource.config.ImageManger;
 
 import java.util.ArrayList;
@@ -23,27 +24,30 @@ public  class EnemyManager {
             enemy.update(now,tank1,tank2,sceneWid,sceneHei);
         }
     }
-    public void draw(GraphicsContext gc){
+    public void draw(GraphicsContext gc, Stage stage){
         for(Enemy enemy:enemies){
-            enemy.draw(gc);
+            enemy.draw(gc,stage);
         }
     }
 
 
     private static long lastEnemySpawnTime=0;
     final private static long enemySpawnInterval=1_000_000_000;
-    private int enemyHaveBeenSpawn=0;
+    private int enemyHave=enemies.size();
     private void decideAndSpawn(List<Enemy> enemies, long now){
-        if(enemyHaveBeenSpawn<1)
-        if (now - lastEnemySpawnTime > enemySpawnInterval) {
-            int x = (int)(Math.random() * (800 - 40));// 屏幕宽度减去敌人宽度
-            int y = (int)(Math.random() * (600 - 40));//HERE
+        enemyHave=enemies.size();
+        System.out.println("EH:"+enemyHave);
+        if(enemyHave<5){
+            if (now - lastEnemySpawnTime > enemySpawnInterval) {
+                int x = (int)(Math.random() * (800 - 40));// 屏幕宽度减去敌人宽度
+                int y = (int)(Math.random() * (600 - 40));//HERE
 
 
-            enemies.add(new Enemy(x, y,50, ImageManger.enemy,1));
+                enemies.add(new Enemy(x, y,50, ImageManger.enemy,1));
 //                protected Enemy(int x, int y, double width, Image image, int speed)
-            lastEnemySpawnTime = now;
-            enemyHaveBeenSpawn++;
+                lastEnemySpawnTime = now;
+            }
         }
+
     }
 }

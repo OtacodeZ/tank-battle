@@ -4,6 +4,7 @@ import com.tankbattle.app.Main;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 import java.util.Iterator;
 import java.util.Random;
@@ -11,19 +12,25 @@ import java.util.Random;
 public class Enemy extends Tank implements Collidable{
     private long lastFireTimeE =0;
     private int enemySeetank=0;
-
+    private int enemyInitHP=3;
     private static double seeDistance=40000;//视野范围
     private String ifOnpenViewCycle="on";//是否可视化enemy的索敌圈，若是，改为“on”
 
     protected Enemy(int x, int y, double width, Image image, int speed) {
         super(x, y, width, image, speed);
-
+        this.HP.set(enemyInitHP);
         CollisionManager.collidables.add(this);
     }
 
     @Override
-    public void draw(GraphicsContext gc) {
+    public void draw(GraphicsContext gc, Stage stage) {
+        int windowWid = (int) stage.getWidth(); // 获取当前宽度
+        int windowHei = (int) stage.getHeight(); // 获取当前高度
+        double scaleX = windowWid / (double) Main.sceneWid;
+        double scaleY = windowHei / (double) Main.sceneHei;
+
         gc.save();
+        gc.scale(scaleX,scaleY);
         gc.translate(x,y);
         gc.rotate((3-this.dir)*45);
 
@@ -37,7 +44,7 @@ public class Enemy extends Tank implements Collidable{
         gc.restore();
 
         for (Bullet bullet : bullets) {
-            bullet.draw(gc);
+            bullet.draw(gc,stage);
         }
     }
 

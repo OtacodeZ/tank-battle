@@ -13,8 +13,8 @@ public class Main extends Application {
 
 
 
-     public static int sceneWid=800;
-     public static int sceneHei=600;
+     public static int sceneWid=960;
+     public static int sceneHei=540;
 
     private Stage primaryStage;
     private Scene startScene;
@@ -43,7 +43,7 @@ public class Main extends Application {
         startScene = new Scene(layout, 400, 300);
 
         // 初始化两个模式
-        mode1 = new Mode1(primaryStage, startScene);
+        mode1 = new Mode1(primaryStage);
         mode2 = new Mode2(primaryStage, startScene);
 
         // 设置初始界面
@@ -61,7 +61,6 @@ public class Main extends Application {
         stage.widthProperty().addListener((obs, oldVal, newVal) -> {
             sceneWid=newVal.intValue();
             canvas.setWidth(newVal.doubleValue());
-
         });
         stage.heightProperty().addListener((obs, oldVal, newVal) -> {
             sceneHei=newVal.intValue();

@@ -23,10 +23,10 @@ import java.util.Set;
 public class Mode1 {
     private Scene scene;
     private AnimationTimer gameLoop;
-
+    private Stage stage;
     private String ifGenerateTankB="yes";
-    public Mode1(Stage stage, Scene startScene) {
-
+    public Mode1(Stage stage) {
+        this.stage=stage;
 
 
 
@@ -67,13 +67,18 @@ public class Mode1 {
                 CollisionManager.update();
 
                 enemyManager.update(now,tankGamerA,tankGamerB,Main.sceneWid,Main.sceneHei);
+
+                sizeChangeable(stage,canvas);
             }
 
+
+
             private void draw(){
-                bg.draw(gc,Main.sceneWid,Main.sceneHei);
-                tankGamerA.draw(gc);
-                tankGamerB.draw(gc);
-                enemyManager.draw(gc);
+
+                bg.draw(gc,Main.sceneWid,Main.sceneHei,stage);
+                tankGamerA.draw(gc,stage);
+                tankGamerB.draw(gc,stage);
+                enemyManager.draw(gc,stage);
 
             }
         };
@@ -90,5 +95,19 @@ public class Mode1 {
     public void stop() {
         gameLoop.stop();
     }
+
+
+    private void sizeChangeable(Stage stage, Canvas canvas){
+        //可全屏化
+        stage.widthProperty().addListener((obs, oldVal, newVal) -> {
+
+            canvas.setWidth(newVal.doubleValue());
+        });
+        stage.heightProperty().addListener((obs, oldVal, newVal) -> {
+
+            canvas.setHeight(newVal.doubleValue());
+        });
+    }
+
 }
 

@@ -1,11 +1,12 @@
 package com.tankbattle.model;
 
+import com.tankbattle.app.Main;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-
+import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -25,9 +26,14 @@ public abstract class Tank extends Rectangle {
         this.speed=speed;
 
     }
-    public void draw(GraphicsContext gc){
-//        this.height=width*image.getHeight()/image.getWidth();
+    public void draw(GraphicsContext gc,Stage stage){
+        int windowWid = (int) stage.getWidth(); // 获取当前宽度
+        int windowHei = (int) stage.getHeight(); // 获取当前高度
+        double scaleX = windowWid / (double) Main.sceneWid;
+        double scaleY = windowHei / (double) Main.sceneHei;
+
         gc.save();
+        gc.scale(scaleX,scaleY);
         gc.translate(x,y);
         gc.rotate((3-this.dir)*45);
         gc.setGlobalAlpha((float)this.HP.get()/this.HP_init);
@@ -35,7 +41,7 @@ public abstract class Tank extends Rectangle {
         gc.restore();
 
         for (Bullet bullet : bullets) {
-            bullet.draw(gc);
+            bullet.draw(gc,stage);
         }
     }
 
