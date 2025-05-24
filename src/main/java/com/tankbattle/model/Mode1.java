@@ -34,7 +34,7 @@ public class Mode1 {
         //classes
         TankGamerA tankGamerA=new TankGamerA(150,150,50, ImageManger.tankGamerA,5);
 
-        TankGamerB tankGamerB =new TankGamerB(150,200,50,ImageManger.tankGamerA,5);
+        TankGamerB tankGamerB =new TankGamerB(150,300,50,ImageManger.tankGamerA,5);
 
         EnemyManager enemyManager=new EnemyManager();
 

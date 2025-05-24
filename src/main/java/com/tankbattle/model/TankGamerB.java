@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class TankGamerB extends Tank implements Collidable{
+    private int oldX,oldY;
     protected TankGamerB(int x, int y, double width, Image image, int speed) {
         super(x, y, width, image, speed);
         CollisionManager.collidables.add(this);
@@ -14,6 +15,7 @@ public class TankGamerB extends Tank implements Collidable{
 
 
     protected void move(Set<KeyCode> keysPressed, int sceneWid, int sceneHei) {
+        oldX=x;oldY=y;
         if (keysPressed.contains(KeyCode.W)) {
             y -= speed;  // 上移
         }
@@ -110,7 +112,8 @@ public class TankGamerB extends Tank implements Collidable{
         switch (other.getType()){
             case TANK:
             case WALL:
-            case ENEMY:break;
+            case ENEMY:
+                x=oldX;y=oldY;break;
             case BULLET:this.HP.set(this.HP.get()-Bullet.damage);break;
         }
     }

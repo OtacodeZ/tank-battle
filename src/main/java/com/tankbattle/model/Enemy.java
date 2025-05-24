@@ -61,9 +61,10 @@ public class Enemy extends Tank implements Collidable{
         }
     }
 
-
+    private int oldX,oldY;
     private long changeDirLastTime=0;//HERE 具体值需调试
     protected void move(Tank tank1,Tank tank2,int sceneWid, int sceneHei){
+        oldX=x;oldY=y;
         if(enemySeetank==1){
             whenSeeTank(tank1);
         }else if(enemySeetank==2){
@@ -152,7 +153,7 @@ public class Enemy extends Tank implements Collidable{
             case TANK:
             case WALL:
             case ENEMY:
-                break;
+                x=oldX;y=oldY;break;
             case BULLET:
                 this.HP.set(this.HP.get() - Bullet.damage);
                 System.out.println(this+"be shooted");
