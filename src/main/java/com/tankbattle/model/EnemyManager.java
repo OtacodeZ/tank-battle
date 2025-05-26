@@ -37,7 +37,7 @@ public  class EnemyManager {
     private void decideAndSpawn(List<Enemy> enemies, long now){
         enemyHave=enemies.size();
         System.out.println("EH:"+enemyHave);
-        if(enemyHave<5){
+        if(enemyHave<1){
             if (now - lastEnemySpawnTime > enemySpawnInterval) {
                 int x = (int)(Math.random() * (800 - 40));// 屏幕宽度减去敌人宽度
                 int y = (int)(Math.random() * (600 - 40));//HERE

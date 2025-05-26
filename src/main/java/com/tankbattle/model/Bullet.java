@@ -80,7 +80,7 @@ public class Bullet extends Rectangle implements Collidable{
     }
 
 
-    final private static long fireCooldown = 100_000_000;; // 100ms 冷却，单位是纳秒（ns）
+    final private static long fireCooldown = 100_000_000_0L;; // 100ms 冷却，单位是纳秒（ns）
     static public void decideAndFireA(Set<KeyCode> keysPressed, long now, TankGamerA tank, List<Bullet> bullets){
         if (keysPressed.contains(KeyCode.SPACE)) {
             if (now - tank.lastFireTime >= fireCooldown) {

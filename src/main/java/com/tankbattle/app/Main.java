@@ -61,6 +61,7 @@ public class Main extends Application {
         btn1.setOnAction(e -> {
             primaryStage.setScene(mode1.getScene());
             mode1.start();
+            mediaStartBgPlayer.stop();
         });
 
         btn2.setOnAction(e -> {
