@@ -1,10 +1,12 @@
 package com.tankbattle.app;
+import com.tankbattle.model.Enemy;
 import com.tankbattle.model.Mode1;
 import com.tankbattle.model.Mode2;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
@@ -33,6 +35,18 @@ public class Main extends Application {
         this.primaryStage = stage;
 
         // --- 开始界面 ---
+
+        CheckBox checkBox = new CheckBox("可视化敌人视野");
+        checkBox.setLayoutX(420);
+        checkBox.setLayoutY(400);
+        checkBox.setOnAction(e -> {
+            if (checkBox.isSelected()) {
+                Enemy.ifOnpenViewCycle="on";
+            } else {
+                Enemy.ifOnpenViewCycle="no";
+            }
+        });
+
         Media mediaStartBg=new Media(VedioUrl.mediaUrl);
         MediaPlayer mediaStartBgPlayer = new MediaPlayer(mediaStartBg);
         // 3. 创建MediaView显示视频
@@ -41,11 +55,8 @@ public class Main extends Application {
         Text text=new Text("坦克大战");
         text.setLayoutX(420);
         text.setLayoutY(200);
-        // 设置字体和大小
         text.setFont(Font.font(30));
-
-// 设置颜色
-        text.setFill(Color.RED);  // 颜色为白色// 纵向位置：距离顶部150像素
+        text.setFill(Color.RED);
 
         Button btn1 = new Button("进入模式1");
         Button btn2 = new Button("进入模式2");
@@ -69,7 +80,7 @@ public class Main extends Application {
             mode2.start();
         });
 
-        Pane root = new Pane( mediaView,text, btn1, btn2);
+        Pane root = new Pane( mediaView,text, btn1, btn2,checkBox);
         mediaView.fitWidthProperty().bind(root.widthProperty());
         mediaView.fitHeightProperty().bind(root.heightProperty());
         mediaView.setPreserveRatio(false);

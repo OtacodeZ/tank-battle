@@ -4,6 +4,7 @@ import com.tankbattle.app.Main;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import resource.config.AudioPath;
@@ -140,10 +141,12 @@ public class Bullet extends Rectangle implements Collidable{
 
     //音效
     private void playShootSound() {
-        Media sound = new Media(AudioPath.SHOOT_voice);
-        MediaPlayer player = new MediaPlayer(sound);
-        player.play();
-        player.setOnEndOfMedia(() -> player.dispose());  // 播放完释放资源
+        AudioClip shootClip = new AudioClip(AudioPath.SHOOT_voice);
+        shootClip.play();
+//        Media sound = new Media(AudioPath.SHOOT_voice);
+//        MediaPlayer player = new MediaPlayer(sound);
+//        player.play();
+//        player.setOnEndOfMedia(() -> player.dispose());  // 播放完释放资源
 
     }
 }

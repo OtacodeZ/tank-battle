@@ -14,7 +14,7 @@ public class Enemy extends Tank implements Collidable{
     private int enemySeetank=0;
     private int enemyInitHP=3;
     private static double seeDistance=40000;//视野范围
-    private String ifOnpenViewCycle="on";//是否可视化enemy的索敌圈，若是，改为“on”
+    public static String ifOnpenViewCycle="no";//是否可视化enemy的索敌圈，若是，改为“on”
 
     protected Enemy(int x, int y, double width, Image image, int speed) {
         super(x, y, width, image, speed);
