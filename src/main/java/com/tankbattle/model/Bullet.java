@@ -4,6 +4,9 @@ import com.tankbattle.app.Main;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import resource.config.AudioPath;
 import resource.config.ImageManger;
 import javafx.stage.Stage;
 import java.util.List;
@@ -119,7 +122,9 @@ public class Bullet extends Rectangle implements Collidable{
             case TANK :
             case WALL:
             case ENEMY:
-                liveStatus="die";break;
+                liveStatus="die";
+                playShootSound();
+                break;
             case BULLET:break;
         }
     }
@@ -130,5 +135,15 @@ public class Bullet extends Rectangle implements Collidable{
     @Override
     public CollisionType getType() {
         return CollisionType.BULLET;
+    }
+
+
+    //音效
+    private void playShootSound() {
+        Media sound = new Media(AudioPath.SHOOT_voice);
+        MediaPlayer player = new MediaPlayer(sound);
+        player.play();
+        player.setOnEndOfMedia(() -> player.dispose());  // 播放完释放资源
+
     }
 }
