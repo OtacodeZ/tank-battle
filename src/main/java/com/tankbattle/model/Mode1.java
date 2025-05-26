@@ -10,8 +10,11 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import resource.config.AudioPath;
 import resource.config.ImageManger;
 
 import java.util.ArrayList;
@@ -25,11 +28,12 @@ public class Mode1 {
     private AnimationTimer gameLoop;
     private Stage stage;
     private String ifGenerateTankB="yes";
+
+    //bgm
+    Media bgmMedia = new Media(AudioPath.BGM);
+    MediaPlayer bgmPlayer = new MediaPlayer(bgmMedia);
     public Mode1(Stage stage) {
         this.stage=stage;
-
-
-
 
         //classes
         TankGamerA tankGamerA=new TankGamerA(150,150,50, ImageManger.tankGamerA,5);
@@ -89,10 +93,16 @@ public class Mode1 {
     }
 
     public void start() {
+
+
+        bgmPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        bgmPlayer.setVolume(0.3);
+        bgmPlayer.play();
         gameLoop.start();
     }
 
     public void stop() {
+        bgmPlayer.stop();
         gameLoop.stop();
     }
 
