@@ -5,9 +5,16 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import resource.config.VedioUrl;
 
 public class Main extends Application {
 
@@ -26,8 +33,30 @@ public class Main extends Application {
         this.primaryStage = stage;
 
         // --- 开始界面 ---
+        Media mediaStartBg=new Media(VedioUrl.mediaUrl);
+        MediaPlayer mediaStartBgPlayer = new MediaPlayer(mediaStartBg);
+        // 3. 创建MediaView显示视频
+        MediaView mediaView = new MediaView(mediaStartBgPlayer);
+
+        Text text=new Text("坦克大战");
+        text.setLayoutX(420);
+        text.setLayoutY(200);
+        // 设置字体和大小
+        text.setFont(Font.font(30));
+
+// 设置颜色
+        text.setFill(Color.RED);  // 颜色为白色// 纵向位置：距离顶部150像素
+
         Button btn1 = new Button("进入模式1");
         Button btn2 = new Button("进入模式2");
+        btn1.setLayoutX(420);  // 横向位置：距离左边100像素
+        btn1.setLayoutY(220);  // 纵向位置：距离顶部150像素
+        btn1.setPrefWidth(120);
+        btn1.setPrefHeight(40);
+        btn2.setLayoutX(420);
+        btn2.setLayoutY(280);
+        btn2.setPrefWidth(120);
+        btn2.setPrefHeight(40);
 
         btn1.setOnAction(e -> {
             primaryStage.setScene(mode1.getScene());
@@ -39,8 +68,12 @@ public class Main extends Application {
             mode2.start();
         });
 
-        VBox layout = new VBox(10, new Text("选择模式"), btn1, btn2);
-        startScene = new Scene(layout, 400, 300);
+        Pane root = new Pane( mediaView,text, btn1, btn2);
+        mediaView.fitWidthProperty().bind(root.widthProperty());
+        mediaView.fitHeightProperty().bind(root.heightProperty());
+        mediaView.setPreserveRatio(false);
+
+        startScene = new Scene(root, sceneWid, sceneHei);
 
         // 初始化两个模式
         mode1 = new Mode1(primaryStage);
@@ -50,23 +83,19 @@ public class Main extends Application {
         primaryStage.setScene(startScene);
         primaryStage.setTitle("坦克大战");
         primaryStage.show();
+
+        mediaStartBgPlayer.setOnReady(() -> {
+            mediaStartBgPlayer.play();
+        });
+
+
     }
 
     public static void main(String[] args) {
         launch(args);
     }
 
-    private void sizeChangeable(Stage stage, Canvas canvas){
-        //可全屏化
-        stage.widthProperty().addListener((obs, oldVal, newVal) -> {
-            sceneWid=newVal.intValue();
-            canvas.setWidth(newVal.doubleValue());
-        });
-        stage.heightProperty().addListener((obs, oldVal, newVal) -> {
-            sceneHei=newVal.intValue();
-            canvas.setHeight(newVal.doubleValue());
-        });
-    }
+
 
 
 }
