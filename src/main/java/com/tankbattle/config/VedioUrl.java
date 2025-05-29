@@ -1,6 +1,4 @@
-package resource.config;
-
-import java.io.File;
+package com.tankbattle.config;
 
 public class VedioUrl {
 //    private static String path = VedioUrl.class.getResource("/vedio/background.mkv").toExternalForm();

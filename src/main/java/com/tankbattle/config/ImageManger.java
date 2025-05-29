@@ -1,4 +1,4 @@
-package resource.config;
+package com.tankbattle.config;
 
 import javafx.scene.image.Image;
 

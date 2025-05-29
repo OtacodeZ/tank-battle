@@ -2,7 +2,7 @@ package com.tankbattle.model;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
-import resource.config.ImageManger;
+import com.tankbattle.config.ImageManger;
 
 import java.util.ArrayList;
 import java.util.Iterator;

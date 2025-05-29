@@ -1,4 +1,4 @@
-package resource.config;
+package com.tankbattle.config;
 
 public class AudioPath {
     public static String SHOOT_voice=AudioPath.class.getResource("/audio/shoot.mp3").toExternalForm();;
