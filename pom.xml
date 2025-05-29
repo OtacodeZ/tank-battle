@@ -9,8 +9,8 @@
     <version>1.0.0</version>
 
     <properties>
-        <maven.compiler.source>24</maven.compiler.source>
-        <maven.compiler.target>24</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -18,12 +18,12 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>24.0.1</version> <!-- 根据需要调整版本 -->
+            <version>17.0.15</version> <!-- 根据需要调整版本 -->
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-media</artifactId>
-            <version>21</version> <!-- 或你用的版本 -->
+            <version>17.0.15</version> <!-- 或你用的版本 -->
         </dependency>
         <!-- 其他依赖 -->
         <!-- 例如，其他库你需要的 -->
