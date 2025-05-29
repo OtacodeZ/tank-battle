@@ -97,6 +97,7 @@ public class Main extends Application {
         primaryStage.show();
 
         mediaStartBgPlayer.setOnReady(() -> {
+            mediaStartBgPlayer.setCycleCount(MediaPlayer.INDEFINITE);
             mediaStartBgPlayer.play();
         });
 
