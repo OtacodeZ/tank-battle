@@ -7,7 +7,7 @@ public class ImageManger {
     public static final String BULLET_IMG="/images/bulletImg.png";
     public static final String ENEMY_IMG="/images/enemyIMG.png";
 
-    public static final Image tankGamerA=new Image(TANK_IMG,0, 0, true, true, false);
-    public static final Image bullet=new Image(BULLET_IMG,0, 0, true, true, false);
-    public static final Image enemy=new Image(ENEMY_IMG,0, 0, true, true, false);
+    public static final Image tankGamerA=new Image(ImageManger.class.getResource(TANK_IMG).toExternalForm(),0, 0, true, true, false);
+    public static final Image bullet=new Image(ImageManger.class.getResource(BULLET_IMG).toExternalForm(),0, 0, true, true, false);
+    public static final Image enemy=new Image(ImageManger.class.getResource(ENEMY_IMG).toExternalForm(),0, 0, true, true, false);
 }
