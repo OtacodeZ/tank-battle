@@ -1,21 +1,20 @@
 package com.tankbattle.model;
 
 import com.tankbattle.app.Main;
+import com.tankbattle.config.GameConfig;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public abstract class Tank extends Rectangle {
     protected int speed;
     protected Image image;
     protected int dir=3;//方向，逆时针数共1-8方向，默认为3
-    protected final int HP_init=100000;
+    protected final int HP_init= GameConfig.GAMER_HP_INIT;
     public IntegerProperty HP = new SimpleIntegerProperty(HP_init);
     protected long lastFireTime=0;
 

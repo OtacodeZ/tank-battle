@@ -1,6 +1,7 @@
 package com.tankbattle.model;
 
 import com.tankbattle.app.Main;
+import com.tankbattle.config.GameConfig;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Bullet extends Rectangle implements Collidable{
-    private final double speed = 10;
+    private  double speed = GameConfig.BULLET_SPEED;
     public int dir;
     private Image image;
     public static final int damage=1;
@@ -79,7 +80,7 @@ public class Bullet extends Rectangle implements Collidable{
     }
 
 
-    final private static long fireCooldown = 100_000_000_0L;; // 100ms 冷却，单位是纳秒（ns）
+    final private static long fireCooldown = GameConfig.GAMER_BULLET_COOLDOWN;; // 100ms 冷却，单位是纳秒（ns）
     static public void decideAndFireA(Set<KeyCode> keysPressed, long now, TankGamerA tank, List<Bullet> bullets){
         if (keysPressed.contains(KeyCode.SPACE)) {
             if (now - tank.lastFireTime >= fireCooldown) {
@@ -98,7 +99,7 @@ public class Bullet extends Rectangle implements Collidable{
         }
     }
 
-    final private static long fireCooldownE = 500_000_000;
+    final private static long fireCooldownE = GameConfig.ENEMY_BULLET_COOLDOWN;
     static public void decideAndFireE(long now, Enemy enemy, List<Bullet> bullets){
         if (now - enemy.lastFireTime >= fireCooldownE) {
             bullets.add(new Bullet(enemy.getX(), enemy.getY(),ImageManger.bullet,enemy.dir,enemy));// 发射子弹

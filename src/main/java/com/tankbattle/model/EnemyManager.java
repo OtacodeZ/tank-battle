@@ -1,5 +1,6 @@
 package com.tankbattle.model;
 
+import com.tankbattle.config.GameConfig;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 import com.tankbattle.config.ImageManger;
@@ -32,18 +33,18 @@ public  class EnemyManager {
 
 
     private static long lastEnemySpawnTime=0;
-    final private static long enemySpawnInterval=1_000_000_000;
+    final private static long enemySpawnInterval=GameConfig.ENEMY_SPAWN_INTERVAL;
     private int enemyHave=enemies.size();
     private void decideAndSpawn(List<Enemy> enemies, long now){
         enemyHave=enemies.size();
         System.out.println("EH:"+enemyHave);
-        if(enemyHave<1){
+        if(enemyHave< GameConfig.ENEMY_MOST){
             if (now - lastEnemySpawnTime > enemySpawnInterval) {
                 int x = (int)(Math.random() * (800 - 40));// 屏幕宽度减去敌人宽度
                 int y = (int)(Math.random() * (600 - 40));//HERE
 
 
-                enemies.add(new Enemy(x, y,50, ImageManger.enemy,1));
+                enemies.add(new Enemy(x, y,50, ImageManger.enemy,GameConfig.ENEMY_SPEED));
 //                protected Enemy(int x, int y, double width, Image image, int speed)
                 lastEnemySpawnTime = now;
             }

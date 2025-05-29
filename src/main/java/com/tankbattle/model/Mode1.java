@@ -1,6 +1,7 @@
 package com.tankbattle.model;
 
 import com.tankbattle.app.Main;
+import com.tankbattle.config.GameConfig;
 import com.tankbattle.ui.Background;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
@@ -31,9 +32,9 @@ public class Mode1 {
         this.stage=stage;
 
         //classes
-        TankGamerA tankGamerA=new TankGamerA(150,150,50, ImageManger.tankGamerA,5);
+        TankGamerA tankGamerA=new TankGamerA(150,150,50, ImageManger.tankGamerA, GameConfig.GAMER_A_SPEED);
 
-        TankGamerB tankGamerB =new TankGamerB(150,300,50,ImageManger.tankGamerA,5);
+        TankGamerB tankGamerB =new TankGamerB(150,300,50,ImageManger.tankGamerB,GameConfig.GAMER_B_SPEED);
 
         EnemyManager enemyManager=new EnemyManager();
 
