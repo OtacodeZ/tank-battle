@@ -68,7 +68,7 @@ public class Main extends Application {
         btn2.setPrefHeight(40);
 
         btn1.setOnAction(e -> {
-            primaryStage.setScene(mode1.getScene());
+            primaryStage.setScene(mode1.getHomeScene());
             mode1.start();
             mediaStartBgPlayer.stop();
         });
@@ -87,7 +87,7 @@ public class Main extends Application {
 
         // 初始化两个模式
         mode1 = new Mode1(primaryStage);
-        mode2 = new Mode2(primaryStage, startScene);
+        mode2 = new Mode2(primaryStage,startScene);
 
         // 设置初始界面
         primaryStage.setScene(startScene);

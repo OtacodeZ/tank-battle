@@ -4,6 +4,7 @@ import com.tankbattle.app.Main;
 import com.tankbattle.config.GameConfig;
 import com.tankbattle.ui.Background;
 import javafx.animation.AnimationTimer;
+import javafx.beans.binding.Bindings;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -11,6 +12,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import com.tankbattle.config.AudioPath;
 import com.tankbattle.config.ImageManger;
@@ -20,10 +22,12 @@ import java.util.Set;
 
 //
 public class Mode1 {
-    private Scene scene;
+    private Scene homeScene;
     private AnimationTimer gameLoop;
     private Stage stage;
     private String ifGenerateTankB="yes";
+    TankGamerA tankGamerA=new TankGamerA(150,150,50, ImageManger.tankGamerA, GameConfig.GAMER_A_SPEED);
+    TankGamerB tankGamerB=new TankGamerB(150,300,50,ImageManger.tankGamerB,GameConfig.GAMER_B_SPEED);
 
     //bgm
     Media bgmMedia = new Media(AudioPath.BGM);
@@ -32,9 +36,9 @@ public class Mode1 {
         this.stage=stage;
 
         //classes
-        TankGamerA tankGamerA=new TankGamerA(150,150,50, ImageManger.tankGamerA, GameConfig.GAMER_A_SPEED);
+//        tankGamerA=new TankGamerA(150,150,50, ImageManger.tankGamerA, GameConfig.GAMER_A_SPEED);
 
-        TankGamerB tankGamerB =new TankGamerB(150,300,50,ImageManger.tankGamerB,GameConfig.GAMER_B_SPEED);
+//        tankGamerB =new TankGamerB(150,300,50,ImageManger.tankGamerB,GameConfig.GAMER_B_SPEED);
 
         EnemyManager enemyManager=new EnemyManager();
 
@@ -42,15 +46,32 @@ public class Mode1 {
         Canvas canvas=new Canvas(Main.sceneWid,Main.sceneHei);
         GraphicsContext gc=canvas.getGraphicsContext2D();
         Group root = new Group(canvas);
+
+        //hp
+        Text hpA =new Text();
+        hpA.textProperty().bind(
+                Bindings.concat("TankA HP :", tankGamerA.HP.asString())
+        );
+        hpA.setX(0);
+        hpA.setY(20);
+        root.getChildren().add(hpA);
+
+        Text hpB =new Text();
+        hpB.textProperty().bind(
+                Bindings.concat("TankB HP :", tankGamerB.HP.asString())
+        );
+        hpB.setX(0);
+        hpB.setY(40);
+        root.getChildren().add(hpB);
 //
 
-        scene = new Scene(root, Main.sceneWid, Main.sceneHei);
+        homeScene = new Scene(root, Main.sceneWid, Main.sceneHei);
 
         //interactKeyboard();
         Set<KeyCode> keysPressed = new HashSet<>();
-        scene.setOnKeyPressed(event ->
+        homeScene.setOnKeyPressed(event ->
                 keysPressed.add(event.getCode()));
-        scene.setOnKeyReleased(event ->
+        homeScene.setOnKeyReleased(event ->
                 keysPressed.remove(event.getCode()));
         // 游戏主循环
         gameLoop = new AnimationTimer() {
@@ -84,15 +105,17 @@ public class Mode1 {
         };
     }
 
-    public Scene getScene() {
-        return scene;
+    public Scene getHomeScene() {
+        return homeScene;
     }
 
     public void start() {
-
-
         bgmPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         bgmPlayer.setVolume(0.3);
+
+        tankGamerA.HP.set(GameConfig.GAMER_HP_INIT.get());
+        tankGamerB.HP.set(GameConfig.GAMER_HP_INIT.get());
+
         bgmPlayer.play();
         gameLoop.start();
     }

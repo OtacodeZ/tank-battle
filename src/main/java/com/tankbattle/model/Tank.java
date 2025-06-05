@@ -14,8 +14,7 @@ public abstract class Tank extends Rectangle {
     protected int speed;
     protected Image image;
     protected int dir=3;//方向，逆时针数共1-8方向，默认为3
-    protected final int HP_init= GameConfig.GAMER_HP_INIT;
-    public IntegerProperty HP = new SimpleIntegerProperty(HP_init);
+    public IntegerProperty HP = new SimpleIntegerProperty(GameConfig.GAMER_HP_INIT.get());
     protected long lastFireTime=0;
 
     protected Tank(int x, int y, double width, Image image,int speed) {
@@ -35,7 +34,7 @@ public abstract class Tank extends Rectangle {
         gc.scale(scaleX,scaleY);
         gc.translate(x,y);
         gc.rotate((3-this.dir)*45);
-        gc.setGlobalAlpha((float)this.HP.get()/this.HP_init);
+        gc.setGlobalAlpha((float)this.HP.get()/GameConfig.GAMER_HP_INIT.get());
         gc.drawImage(this.image, -(this.width / 2.0), -(height / 2),this.width,height);
         gc.restore();
 
