@@ -81,7 +81,7 @@ public class GameScene {
         homeScene.setOnKeyReleased(event ->
                 keysPressed.remove(event.getCode()));
         //pause page
-        PauseScene pauseScene=new PauseScene(stage,this);
+        PauseScene pauseScene=new PauseScene(stage,this,startScene);
 
 
         // 游戏主循环

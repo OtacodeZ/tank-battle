@@ -12,21 +12,31 @@ import javafx.stage.Stage;
 public class PauseScene {
     private Scene scene;
     private Stage stage;
-    public PauseScene(Stage stage,GameScene gameScene){
+    public PauseScene(Stage stage,GameScene gameScene,Scene startScene){
         this.stage=stage;
         Text text=new Text("暂停");
         text.setLayoutX(450);
-        text.setLayoutY(200);
+        text.setLayoutY(160);
         text.setFont(Font.font(30));
 
         Button btn1=new Button("继续");
         btn1.setLayoutX(420);  // 横向位置：距离左边100像素
-        btn1.setLayoutY(220);  // 纵向位置：距离顶部150像素
+        btn1.setLayoutY(200);  // 纵向位置：距离顶部150像素
         btn1.setPrefWidth(120);
-        btn1.setPrefHeight(40);
+        btn1.setPrefHeight(30);
         btn1.setOnAction(e -> {
             stage.setScene(gameScene.getHomeScene());
             gameScene.start();
+        });
+        Button btn2=new Button("返回标题");
+        btn2.setLayoutX(420);  // 横向位置：距离左边100像素
+        btn2.setLayoutY(240);  // 纵向位置：距离顶部150像素
+        btn2.setPrefWidth(120);
+        btn2.setPrefHeight(30);
+        btn2.setOnAction(e -> {
+            gameScene.stop();
+            stage.setScene(startScene);
+
         });
         ImageView imageView = new ImageView(ImageManger.tutorial);
         imageView.setFitWidth(400);
@@ -39,7 +49,7 @@ public class PauseScene {
         bgImageView.setFitHeight(Main.sceneHei);
         bgImageView.setPreserveRatio(false); // 拉伸填充
 
-        Group root=new Group(bgImageView,btn1,text,imageView);
+        Group root=new Group(bgImageView,btn1,btn2,text,imageView);
         scene=new Scene(root,Main.sceneWid,Main.sceneHei);
     }
 
