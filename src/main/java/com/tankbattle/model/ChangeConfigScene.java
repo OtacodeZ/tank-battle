@@ -61,12 +61,30 @@ public class ChangeConfigScene {
 
         sliderBulletCoolGamer.valueProperty().addListener((observable, oldValue, newValue) -> {
             GameConfig.GAMER_BULLET_COOLDOWN = newValue.intValue() * 1_000_000; // 转换为纳秒
-            System.out.println("NEW_COOLDOWN: " + GameConfig.GAMER_BULLET_COOLDOWN);
+
+        });
+
+        Text textBulletCoolE = new Text("敌人子弹冷却时间（s）：");
+        Slider sliderBulletCoolE = new Slider(0.1, 10, 5); // 100ms 到 2000ms（即0.1s到2s）
+        sliderBulletCoolE.setShowTickLabels(true);
+        sliderBulletCoolE.setShowTickMarks(true);
+        sliderBulletCoolE.setMajorTickUnit(0.5); // 每500ms一格
+        sliderBulletCoolE.setMinorTickCount(4);
+        sliderBulletCoolE.setBlockIncrement(0.1);
+
+        sliderBulletCoolE.valueProperty().addListener((observable, oldValue, newValue) -> {
+            GameConfig.ENEMY_BULLET_COOLDOWN = newValue.intValue() * 1_000_000_000; // 转换为纳秒
+
         });
 
 
 
-        VBox root=new VBox(btn1,textHP,sliderHP, textSpeedGamer, sliderSpeedGamer,textSpeedE,sliderSpeedE,textBulletCoolGamer,sliderBulletCoolGamer);
+
+        VBox root=new VBox(btn1,textHP,sliderHP,
+                textSpeedGamer, sliderSpeedGamer,
+                textSpeedE,sliderSpeedE,
+                textBulletCoolGamer, sliderBulletCoolGamer,
+                textBulletCoolE, sliderBulletCoolE);
         scene = new Scene(root, Main.sceneWid, Main.sceneHei);
     }
     public Scene getScene() {
