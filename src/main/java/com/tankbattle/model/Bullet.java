@@ -141,6 +141,7 @@ public class Bullet extends Rectangle implements Collidable{
     //音效
     private void playShootSound() {
         AudioClip shootClip = new AudioClip(AudioPath.SHOOT_voice);
+        shootClip.setVolume(0.3);
         shootClip.play();
 //        Media sound = new Media(AudioPath.SHOOT_voice);
 //        MediaPlayer player = new MediaPlayer(sound);

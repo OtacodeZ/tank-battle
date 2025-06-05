@@ -9,7 +9,7 @@ public class GameConfig {
     //gamer
 
     public static IntegerProperty GAMER_HP_INIT =new SimpleIntegerProperty(20);
-    public static long GAMER_BULLET_COOLDOWN =100_000_000_0L;
+    public static long GAMER_BULLET_COOLDOWN =50_000_000_0L;
     public static IntegerProperty GAMER_SPEED =new SimpleIntegerProperty(10) ;
     //enemy
     public static int ENEMY_HP_INIT=3;

@@ -52,7 +52,7 @@ public class ChangeConfigScene {
         //bullet cooldown
 
         Text textBulletCoolGamer = new Text("玩家子弹冷却时间（ms）：");
-        Slider sliderBulletCoolGamer = new Slider(100, 2000, 1000); // 100ms 到 2000ms（即0.1s到2s）
+        Slider sliderBulletCoolGamer = new Slider(100, 2000, 500); // 100ms 到 2000ms（即0.1s到2s）
         sliderBulletCoolGamer.setShowTickLabels(true);
         sliderBulletCoolGamer.setShowTickMarks(true);
         sliderBulletCoolGamer.setMajorTickUnit(500); // 每500ms一格
