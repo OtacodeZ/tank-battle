@@ -26,8 +26,8 @@ public class TwoGamerScene {
     private AnimationTimer gameLoop;
     private Stage stage;
     private String ifGenerateTankB="yes";
-    TankGamerA tankGamerA=new TankGamerA(150,150,50, ImageManger.tankGamerA, GameConfig.GAMER_A_SPEED);
-    TankGamerB tankGamerB=new TankGamerB(150,300,50,ImageManger.tankGamerB,GameConfig.GAMER_B_SPEED);
+    TankGamerA tankGamerA=new TankGamerA(150,150,50, ImageManger.tankGamerA, GameConfig.GAMER_SPEED.get());
+    TankGamerB tankGamerB=new TankGamerB(150,300,50,ImageManger.tankGamerB,GameConfig.GAMER_SPEED.get());
 
     //bgm
     Media bgmMedia = new Media(AudioPath.BGM);
@@ -36,7 +36,7 @@ public class TwoGamerScene {
         this.stage=stage;
 
         //classes
-//        tankGamerA=new TankGamerA(150,150,50, ImageManger.tankGamerA, GameConfig.GAMER_A_SPEED);
+//        tankGamerA=new TankGamerA(150,150,50, ImageManger.tankGamerA, GameConfig.GAMER_SPEED);
 
 //        tankGamerB =new TankGamerB(150,300,50,ImageManger.tankGamerB,GameConfig.GAMER_B_SPEED);
 
@@ -114,7 +114,9 @@ public class TwoGamerScene {
         bgmPlayer.setVolume(0.3);
 
         tankGamerA.HP.set(GameConfig.GAMER_HP_INIT.get());
-    tankGamerB.HP.set(GameConfig.GAMER_HP_INIT.get());
+        tankGamerB.HP.set(GameConfig.GAMER_HP_INIT.get());
+        tankGamerA.speed=GameConfig.GAMER_SPEED.get();
+        tankGamerB.speed=GameConfig.GAMER_SPEED.get();
 
         bgmPlayer.play();
         gameLoop.start();

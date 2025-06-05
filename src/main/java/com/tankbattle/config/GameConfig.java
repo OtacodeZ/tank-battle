@@ -10,8 +10,7 @@ public class GameConfig {
 
     public static IntegerProperty GAMER_HP_INIT =new SimpleIntegerProperty(100);
     public static long GAMER_BULLET_COOLDOWN =100_000_000_0L;
-    public static int GAMER_A_SPEED=5;
-    public static int GAMER_B_SPEED=5;
+    public static IntegerProperty GAMER_SPEED =new SimpleIntegerProperty(10) ;
     //enemy
     public static int ENEMY_HP_INIT=3;
     public static double SEE_DISTANCE=40000;
