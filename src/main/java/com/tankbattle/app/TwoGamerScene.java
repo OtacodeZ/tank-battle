@@ -1,7 +1,10 @@
-package com.tankbattle.model;
+package com.tankbattle.app;
 
-import com.tankbattle.app.Main;
 import com.tankbattle.config.GameConfig;
+import com.tankbattle.model.CollisionManager;
+import com.tankbattle.model.EnemyManager;
+import com.tankbattle.model.TankGamerA;
+import com.tankbattle.model.TankGamerB;
 import com.tankbattle.ui.Background;
 import javafx.animation.AnimationTimer;
 import javafx.beans.binding.Bindings;
