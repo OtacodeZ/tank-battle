@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 public class ChangeConfigScene {
     private Scene scene;
     private Stage stage;
-    public ChangeConfigScene(Stage stage, Scene homeScene){
+    public ChangeConfigScene(Stage stage,Scene homeScene){
         this.stage=stage;
         Button btn1=new Button("返回");
         btn1.setOnAction(e -> {

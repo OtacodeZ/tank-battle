@@ -96,7 +96,7 @@ public class Main extends Application {
         startScene = new Scene(root, sceneWid, sceneHei);
 
         // 初始化两个模式
-        gameScene = new GameScene(primaryStage);
+        gameScene = new GameScene(primaryStage,startScene);
         changeConfigScene = new ChangeConfigScene(primaryStage,startScene);
 
         // 设置初始界面

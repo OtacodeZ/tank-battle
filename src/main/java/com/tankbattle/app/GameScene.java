@@ -35,7 +35,7 @@ public class GameScene {
     //bgm
     Media bgmMedia = new Media(AudioPath.BGM);
     MediaPlayer bgmPlayer = new MediaPlayer(bgmMedia);
-    public GameScene(Stage stage) {
+    public GameScene(Stage stage,Scene startScene) {
         this.stage=stage;
 
         //classes
@@ -74,11 +74,16 @@ public class GameScene {
         homeScene = new Scene(root, Main.sceneWid, Main.sceneHei);
 
         //interactKeyboard();
+
         Set<KeyCode> keysPressed = new HashSet<>();
         homeScene.setOnKeyPressed(event ->
                 keysPressed.add(event.getCode()));
         homeScene.setOnKeyReleased(event ->
                 keysPressed.remove(event.getCode()));
+        //pause page
+        PauseScene pauseScene=new PauseScene(stage,this);
+
+
         // 游戏主循环
         gameLoop = new AnimationTimer() {
             @Override
@@ -90,12 +95,17 @@ public class GameScene {
             private void update(long now){
                 tankGamerA.update(now,keysPressed,Main.sceneWid,Main.sceneHei);
                 tankGamerB.update(now,keysPressed,Main.sceneWid,Main.sceneHei);
-
                 CollisionManager.update();
-
                 enemyManager.update(now,tankGamerA,tankGamerB,Main.sceneWid,Main.sceneHei);
-
                 sizeChangeable(stage,canvas);
+
+                if(keysPressed.contains(KeyCode.ESCAPE)){
+                    keysPressed.remove(KeyCode.ESCAPE);
+                    bgmPlayer.pause();
+                    gameLoop.stop();
+                    stage.setScene(pauseScene.getSene());
+
+                }
             }
 
 
