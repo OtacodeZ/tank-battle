@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Tank extends Rectangle {
-    protected int speed;
+    public int speed;
     protected Image image;
     protected int dir=8;//方向，逆时针数共1-8方向，默认为3
     public IntegerProperty HP = new SimpleIntegerProperty(GameConfig.GAMER_HP_INIT.get());

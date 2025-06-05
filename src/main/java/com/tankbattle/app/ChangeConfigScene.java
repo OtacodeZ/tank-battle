@@ -1,6 +1,5 @@
-package com.tankbattle.model;
+package com.tankbattle.app;
 
-import com.tankbattle.app.Main;
 import com.tankbattle.config.GameConfig;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

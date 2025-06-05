@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class TankGamerA extends Tank implements Collidable{
     private int oldX,oldY;
-    protected TankGamerA(int x, int y, double width, Image image, int speed) {
+    public TankGamerA(int x, int y, double width, Image image, int speed) {
         super(x, y, width, image, speed);
         CollisionManager.collidables.add(this);
     }
