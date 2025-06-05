@@ -56,8 +56,8 @@ public class Main extends Application {
         text.setFont(Font.font(30));
         text.setFill(Color.RED);
 
-        Button btn1 = new Button("进入模式1");
-        Button btn2 = new Button("进入模式2");
+        Button btn1 = new Button("双人对战");//mode1
+        Button btn2 = new Button("修改器");//mode2
         btn1.setLayoutX(420);  // 横向位置：距离左边100像素
         btn1.setLayoutY(220);  // 纵向位置：距离顶部150像素
         btn1.setPrefWidth(120);

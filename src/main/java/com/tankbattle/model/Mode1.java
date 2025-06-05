@@ -114,7 +114,7 @@ public class Mode1 {
         bgmPlayer.setVolume(0.3);
 
         tankGamerA.HP.set(GameConfig.GAMER_HP_INIT.get());
-        tankGamerB.HP.set(GameConfig.GAMER_HP_INIT.get());
+    tankGamerB.HP.set(GameConfig.GAMER_HP_INIT.get());
 
         bgmPlayer.play();
         gameLoop.start();

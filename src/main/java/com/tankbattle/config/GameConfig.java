@@ -7,6 +7,7 @@ public class GameConfig {
 
 
     //gamer
+
     public static IntegerProperty GAMER_HP_INIT =new SimpleIntegerProperty(100);
     public static long GAMER_BULLET_COOLDOWN =100_000_000_0L;
     public static int GAMER_A_SPEED=5;

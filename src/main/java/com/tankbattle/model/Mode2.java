@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class Mode2 {
@@ -15,17 +16,15 @@ public class Mode2 {
     public Mode2(Stage stage,Scene homeScene){
         this.stage=stage;
 
-        Slider slider = new Slider(1, 100, 50);
+        Text textHP=new Text("玩家初始HP:");
+        Slider slider = new Slider(0, 200, 100);
         slider.setShowTickLabels(true);   // 显示数字标签（如50）
         slider.setShowTickMarks(true);   // 显示刻度线
         slider.setMajorTickUnit(10);     // 每10一格
         slider.setMinorTickCount(4);     // 每个主刻度之间有4个小刻度
         slider.setBlockIncrement(1);     // 拖动时步进为 1
-        slider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            GameConfig.GAMER_HP_INIT.set(newValue.intValue());
-            // 这里可以设置坦克速度，比如 setTankSpeed(speed);
-            System.out.println("NEW_HP:"+ GameConfig.GAMER_HP_INIT.get());
-        });
+
+        GameConfig.GAMER_HP_INIT.bindBidirectional(slider.valueProperty());
         Button btn1=new Button("返回");
         btn1.setOnAction(e -> {
             stage.setScene(homeScene);
@@ -33,7 +32,7 @@ public class Mode2 {
 
 
 
-        VBox root=new VBox(btn1,slider);
+        VBox root=new VBox(btn1,textHP,slider);
         scene = new Scene(root, Main.sceneWid, Main.sceneHei);
     }
     public Scene getScene() {
