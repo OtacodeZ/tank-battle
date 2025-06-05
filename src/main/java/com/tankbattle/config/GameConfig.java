@@ -17,7 +17,7 @@ public class GameConfig {
     public static long ENEMY_BULLET_COOLDOWN=500_000_000L;
     public static int ENEMY_MOST=3;//场上最多有几个敌人
     public static long ENEMY_SPAWN_INTERVAL=1_000_000_000L;
-    public static int ENEMY_SPEED=1;
+    public static IntegerProperty ENEMY_SPEED=new SimpleIntegerProperty(1);
     //bullet
     public static double BULLET_SPEED=10;
 

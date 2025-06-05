@@ -44,7 +44,7 @@ public  class EnemyManager {
                 int y = (int)(Math.random() * (600 - 40));//HERE
 
 
-                enemies.add(new Enemy(x, y,50, ImageManger.enemy,GameConfig.ENEMY_SPEED));
+                enemies.add(new Enemy(x, y,50, ImageManger.enemy,GameConfig.ENEMY_SPEED.get()));
 //                protected Enemy(int x, int y, double width, Image image, int speed)
                 lastEnemySpawnTime = now;
             }

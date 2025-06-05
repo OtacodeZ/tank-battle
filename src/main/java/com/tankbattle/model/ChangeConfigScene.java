@@ -32,18 +32,27 @@ public class ChangeConfigScene {
 
 
         //Speed
-        Text textSpeedA=new Text("玩家A速度：");
-        Slider sliderSpeedA = new Slider(0, 20, 10);
-        sliderSpeedA.setShowTickLabels(true);   // 显示数字标签（如50）
-        sliderSpeedA.setShowTickMarks(true);   // 显示刻度线
-        sliderSpeedA.setMajorTickUnit(1);     // 每10一格
-        sliderSpeedA.setMinorTickCount(4);     // 每个主刻度之间有4个小刻度
-        sliderSpeedA.setBlockIncrement(1);     // 拖动时步进为 1
-        GameConfig.GAMER_SPEED.bindBidirectional(sliderSpeedA.valueProperty());
+        Text textSpeedGamer =new Text("玩家速度：");
+        Slider sliderSpeedGamer = new Slider(0, 20, 10);
+        sliderSpeedGamer.setShowTickLabels(true);   // 显示数字标签（如50）
+        sliderSpeedGamer.setShowTickMarks(true);   // 显示刻度线
+        sliderSpeedGamer.setMajorTickUnit(1);     // 每10一格
+        sliderSpeedGamer.setMinorTickCount(4);     // 每个主刻度之间有4个小刻度
+        sliderSpeedGamer.setBlockIncrement(1);     // 拖动时步进为 1
+        GameConfig.GAMER_SPEED.bindBidirectional(sliderSpeedGamer.valueProperty());
+
+        Text textSpeedE=new Text("玩家速度：");
+        Slider sliderSpeedE = new Slider(0, 20, 1);
+        sliderSpeedE.setShowTickLabels(true);   // 显示数字标签（如50）
+        sliderSpeedE.setShowTickMarks(true);   // 显示刻度线
+        sliderSpeedE.setMajorTickUnit(1);     // 每10一格
+        sliderSpeedE.setMinorTickCount(4);     // 每个主刻度之间有4个小刻度
+        sliderSpeedE.setBlockIncrement(1);     // 拖动时步进为 1
+        GameConfig.ENEMY_SPEED.bindBidirectional(sliderSpeedE.valueProperty());
 
 
 
-        VBox root=new VBox(btn1,textHP,sliderHP,textSpeedA,sliderSpeedA);
+        VBox root=new VBox(btn1,textHP,sliderHP, textSpeedGamer, sliderSpeedGamer,textSpeedE,sliderSpeedE);
         scene = new Scene(root, Main.sceneWid, Main.sceneHei);
     }
     public Scene getScene() {
