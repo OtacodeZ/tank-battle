@@ -90,8 +90,8 @@ public class TankGamerB extends Tank implements Collidable{
         }
 
         if(this.HP.get()<=0){
-            this.x=-100;
-            this.y=-100;//HERE 具体值需调试，目的是把tank移到enemy检测不到的地方
+            this.x=-10000;
+            this.y=-10000;//HERE 具体值需调试，目的是把tank移到enemy检测不到的地方
             return;
         }
         move(keysPressed,sceneWid,sceneHei);

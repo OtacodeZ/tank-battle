@@ -1,4 +1,5 @@
 package com.tankbattle.app;
+import com.tankbattle.config.GameConfig;
 import com.tankbattle.model.Enemy;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -23,7 +24,7 @@ public class Main extends Application {
 
     private Stage primaryStage;
     private Scene startScene;
-    private TwoGamerScene twoGamerScene;
+    private GameScene gameScene;
     private ChangeConfigScene changeConfigScene;
 
     @Override
@@ -42,6 +43,17 @@ public class Main extends Application {
                 Enemy.ifOnpenViewCycle="no";
             }
         });
+        CheckBox checkBoxGamer = new CheckBox("双人模式");
+        checkBoxGamer.setLayoutX(420);
+        checkBoxGamer.setLayoutY(420);
+        checkBoxGamer.setOnAction(e -> {
+
+            if (checkBoxGamer.isSelected()) {
+                GameConfig.GAMER_COUNT="two";
+            } else {
+                GameConfig.GAMER_COUNT="one";
+            }
+        });
 
         Media mediaStartBg=new Media(VedioUrl.mediaUrl);
         MediaPlayer mediaStartBgPlayer = new MediaPlayer(mediaStartBg);
@@ -54,8 +66,8 @@ public class Main extends Application {
         text.setFont(Font.font(30));
         text.setFill(Color.RED);
 
-        Button btn1 = new Button("双人模式");//mode1
-        Button btn2 = new Button("修改器");//mode2
+        Button btn1 = new Button("游戏开始");
+        Button btn2 = new Button("修改器");
         btn1.setLayoutX(420);  // 横向位置：距离左边100像素
         btn1.setLayoutY(220);  // 纵向位置：距离顶部150像素
         btn1.setPrefWidth(120);
@@ -66,8 +78,8 @@ public class Main extends Application {
         btn2.setPrefHeight(40);
 
         btn1.setOnAction(e -> {
-            primaryStage.setScene(twoGamerScene.getHomeScene());
-            twoGamerScene.start();
+            primaryStage.setScene(gameScene.getHomeScene());
+            gameScene.start();
             mediaStartBgPlayer.stop();
         });
 
@@ -76,7 +88,7 @@ public class Main extends Application {
             changeConfigScene.start();
         });
 
-        Pane root = new Pane( mediaView,text, btn1, btn2,checkBox);
+        Pane root = new Pane( mediaView,text, btn1, btn2, checkBoxGamer,checkBox);
         mediaView.fitWidthProperty().bind(root.widthProperty());
         mediaView.fitHeightProperty().bind(root.heightProperty());
         mediaView.setPreserveRatio(false);
@@ -84,7 +96,7 @@ public class Main extends Application {
         startScene = new Scene(root, sceneWid, sceneHei);
 
         // 初始化两个模式
-        twoGamerScene = new TwoGamerScene(primaryStage);
+        gameScene = new GameScene(primaryStage);
         changeConfigScene = new ChangeConfigScene(primaryStage,startScene);
 
         // 设置初始界面

@@ -24,18 +24,18 @@ import java.util.HashSet;
 import java.util.Set;
 
 //
-public class TwoGamerScene {
+public class GameScene {
     private Scene homeScene;
     private AnimationTimer gameLoop;
     private Stage stage;
     private String ifGenerateTankB="yes";
-    TankGamerA tankGamerA=new TankGamerA(150,150,50, ImageManger.tankGamerA, GameConfig.GAMER_SPEED.get());
-    TankGamerB tankGamerB=new TankGamerB(150,300,50,ImageManger.tankGamerB,GameConfig.GAMER_SPEED.get());
+    TankGamerA tankGamerA=new TankGamerA(150,400,50, ImageManger.tankGamerA, GameConfig.GAMER_SPEED.get());
+    TankGamerB tankGamerB=new TankGamerB(850,400,50,ImageManger.tankGamerB,GameConfig.GAMER_SPEED.get());
 
     //bgm
     Media bgmMedia = new Media(AudioPath.BGM);
     MediaPlayer bgmPlayer = new MediaPlayer(bgmMedia);
-    public TwoGamerScene(Stage stage) {
+    public GameScene(Stage stage) {
         this.stage=stage;
 
         //classes
@@ -59,13 +59,16 @@ public class TwoGamerScene {
         hpA.setY(20);
         root.getChildren().add(hpA);
 
-        Text hpB =new Text();
-        hpB.textProperty().bind(
-                Bindings.concat("TankB HP :", tankGamerB.HP.asString())
-        );
-        hpB.setX(0);
-        hpB.setY(40);
-        root.getChildren().add(hpB);
+        if(GameConfig.GAMER_COUNT.equalsIgnoreCase("two")){
+            Text hpB =new Text();
+            hpB.textProperty().bind(
+                    Bindings.concat("TankB HP :", tankGamerB.HP.asString())
+            );
+            hpB.setX(0);
+            hpB.setY(40);
+            root.getChildren().add(hpB);
+        }
+
 //
 
         homeScene = new Scene(root, Main.sceneWid, Main.sceneHei);
@@ -120,6 +123,10 @@ public class TwoGamerScene {
         tankGamerB.HP.set(GameConfig.GAMER_HP_INIT.get());
         tankGamerA.speed=GameConfig.GAMER_SPEED.get();
         tankGamerB.speed=GameConfig.GAMER_SPEED.get();
+
+        if(GameConfig.GAMER_COUNT.equalsIgnoreCase("one")){
+            tankGamerB.HP.set(-1);
+        }
 
         bgmPlayer.play();
         gameLoop.start();
