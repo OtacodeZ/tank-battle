@@ -79,17 +79,10 @@ public class TankGamerA extends Tank implements Collidable{
 
 
     public void update(long now,Set<KeyCode> keysPressed,int sceneWid,int sceneHei){
-       if(this.HP.get()<=0){
-           this.x=-10000;
-           this.y=-10000;//HERE 具体值需调试，目的是把tank移到enemy检测不到的地方
-           return;
-       }
-       move(keysPressed,sceneWid,sceneHei);
 
-       Bullet.decideAndFireA(keysPressed,now,this,bullets);
-       bullets.forEach(Bullet::move);
-
-       //remove bullets
+        Bullet.decideAndFireA(keysPressed,now,this,bullets);
+        bullets.forEach(Bullet::move);
+        //remove bullets
         Iterator<Bullet> iterator=bullets.iterator();
         while (iterator.hasNext()){
             Bullet bullet=iterator.next();
@@ -99,6 +92,13 @@ public class TankGamerA extends Tank implements Collidable{
             }
 
         }
+
+        if(this.HP.get()<=0){
+           this.x=-10000;
+           this.y=-10000;//HERE 具体值需调试，目的是把tank移到enemy检测不到的地方
+           return;
+       }
+       move(keysPressed,sceneWid,sceneHei);
 
     }
 
