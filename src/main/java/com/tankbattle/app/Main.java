@@ -1,7 +1,7 @@
 package com.tankbattle.app;
 import com.tankbattle.model.Enemy;
-import com.tankbattle.model.Mode1;
-import com.tankbattle.model.Mode2;
+import com.tankbattle.model.TwoGamerScene;
+import com.tankbattle.model.ChangeConfigScene;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -25,8 +25,8 @@ public class Main extends Application {
 
     private Stage primaryStage;
     private Scene startScene;
-    private Mode1 mode1;
-    private Mode2 mode2;
+    private TwoGamerScene twoGamerScene;
+    private ChangeConfigScene changeConfigScene;
 
     @Override
     public void start(Stage stage) {
@@ -47,7 +47,7 @@ public class Main extends Application {
 
         Media mediaStartBg=new Media(VedioUrl.mediaUrl);
         MediaPlayer mediaStartBgPlayer = new MediaPlayer(mediaStartBg);
-        // 3. 创建MediaView显示视频
+
         MediaView mediaView = new MediaView(mediaStartBgPlayer);
 
         Text text=new Text("坦克大战");
@@ -56,7 +56,7 @@ public class Main extends Application {
         text.setFont(Font.font(30));
         text.setFill(Color.RED);
 
-        Button btn1 = new Button("双人对战");//mode1
+        Button btn1 = new Button("双人模式");//mode1
         Button btn2 = new Button("修改器");//mode2
         btn1.setLayoutX(420);  // 横向位置：距离左边100像素
         btn1.setLayoutY(220);  // 纵向位置：距离顶部150像素
@@ -68,14 +68,14 @@ public class Main extends Application {
         btn2.setPrefHeight(40);
 
         btn1.setOnAction(e -> {
-            primaryStage.setScene(mode1.getHomeScene());
-            mode1.start();
+            primaryStage.setScene(twoGamerScene.getHomeScene());
+            twoGamerScene.start();
             mediaStartBgPlayer.stop();
         });
 
         btn2.setOnAction(e -> {
-            primaryStage.setScene(mode2.getScene());
-            mode2.start();
+            primaryStage.setScene(changeConfigScene.getScene());
+            changeConfigScene.start();
         });
 
         Pane root = new Pane( mediaView,text, btn1, btn2,checkBox);
@@ -86,8 +86,8 @@ public class Main extends Application {
         startScene = new Scene(root, sceneWid, sceneHei);
 
         // 初始化两个模式
-        mode1 = new Mode1(primaryStage);
-        mode2 = new Mode2(primaryStage,startScene);
+        twoGamerScene = new TwoGamerScene(primaryStage);
+        changeConfigScene = new ChangeConfigScene(primaryStage,startScene);
 
         // 设置初始界面
         primaryStage.setScene(startScene);

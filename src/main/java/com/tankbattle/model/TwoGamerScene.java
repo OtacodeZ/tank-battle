@@ -21,7 +21,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 //
-public class Mode1 {
+public class TwoGamerScene {
     private Scene homeScene;
     private AnimationTimer gameLoop;
     private Stage stage;
@@ -32,7 +32,7 @@ public class Mode1 {
     //bgm
     Media bgmMedia = new Media(AudioPath.BGM);
     MediaPlayer bgmPlayer = new MediaPlayer(bgmMedia);
-    public Mode1(Stage stage) {
+    public TwoGamerScene(Stage stage) {
         this.stage=stage;
 
         //classes

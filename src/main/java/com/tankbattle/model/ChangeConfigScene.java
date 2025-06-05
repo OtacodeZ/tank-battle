@@ -2,7 +2,6 @@ package com.tankbattle.model;
 
 import com.tankbattle.app.Main;
 import com.tankbattle.config.GameConfig;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
@@ -10,10 +9,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class Mode2 {
+public class ChangeConfigScene {
     private Scene scene;
     private Stage stage;
-    public Mode2(Stage stage,Scene homeScene){
+    public ChangeConfigScene(Stage stage, Scene homeScene){
         this.stage=stage;
 
         Text textHP=new Text("玩家初始HP:");
