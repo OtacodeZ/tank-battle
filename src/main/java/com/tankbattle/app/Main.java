@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -105,6 +106,8 @@ public class Main extends Application {
         // 初始化两个模式
         gameScene = new GameScene(primaryStage,startScene);
         changeConfigScene = new ChangeConfigScene(primaryStage,startScene);
+
+
 
         // 设置初始界面
         primaryStage.setScene(startScene);

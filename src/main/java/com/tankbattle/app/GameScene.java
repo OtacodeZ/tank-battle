@@ -7,6 +7,7 @@ import com.tankbattle.model.TankGamerA;
 import com.tankbattle.model.TankGamerB;
 import com.tankbattle.ui.Background;
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -103,7 +104,9 @@ public class GameScene {
                     keysPressed.remove(KeyCode.ESCAPE);
                     bgmPlayer.pause();
                     gameLoop.stop();
+                    pauseScene.change();
                     stage.setScene(pauseScene.getSene());
+
 
                 }
             }

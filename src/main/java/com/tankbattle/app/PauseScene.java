@@ -5,6 +5,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -12,6 +13,7 @@ import javafx.stage.Stage;
 public class PauseScene {
     private Scene scene;
     private Stage stage;
+    private Group root;
     public PauseScene(Stage stage,GameScene gameScene,Scene startScene){
         this.stage=stage;
         Text text=new Text("暂停");
@@ -42,19 +44,43 @@ public class PauseScene {
         imageView.setFitWidth(400);
         imageView.setPreserveRatio(true);
         imageView.setLayoutX(280);
-        imageView.setLayoutY(280);
+        imageView.setLayoutY(275);
 
         ImageView bgImageView = new ImageView(ImageManger.pauseBackground);
         bgImageView.setFitWidth(Main.sceneWid);
         bgImageView.setFitHeight(Main.sceneHei);
         bgImageView.setPreserveRatio(false); // 拉伸填充
 
-        Group root=new Group(bgImageView,btn1,btn2,text,imageView);
-        scene=new Scene(root,Main.sceneWid,Main.sceneHei);
+        root=new Group(bgImageView,btn1,btn2,text,imageView);
+
+        // 外层容器，用于缩放
+        StackPane scalableRoot = new StackPane(root);
+        scene=new Scene(scalableRoot,Main.sceneWid,Main.sceneHei);
+//        // 当窗口大小变化时，更新缩放比例
+//        scene.widthProperty().addListener((obs, oldVal, newVal) -> {
+//            double scaleX = newVal.doubleValue() / Main.sceneWid;
+//            double scaleY = scene.getHeight() / Main.sceneHei;
+//            root.setScaleX(scaleX);
+//            root.setScaleY(scaleY);
+//        });
+//
+//        scene.heightProperty().addListener((obs, oldVal, newVal) -> {
+//            double scaleX = scene.getWidth() / Main.sceneWid;
+//            double scaleY = newVal.doubleValue() / Main.sceneHei;
+//            root.setScaleX(scaleX);
+//            root.setScaleY(scaleY);
+//        });
+
     }
 
     public Scene getSene(){
         return this.scene;
+    }
+    public void change(){
+//        double scaleX = scene.getWidth() / Main.sceneWid;
+//        double scaleY = scene.getHeight() / Main.sceneHei;
+//        root.setScaleX(scaleX);
+//        root.setScaleY(scaleY);
     }
 
 }
