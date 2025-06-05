@@ -1,10 +1,12 @@
 package com.tankbattle.app;
 import com.tankbattle.config.GameConfig;
+import com.tankbattle.config.ImageManger;
 import com.tankbattle.model.Enemy;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -87,8 +89,13 @@ public class Main extends Application {
             primaryStage.setScene(changeConfigScene.getScene());
             changeConfigScene.start();
         });
+        //为防止视频加载不出来，用暂停页的背景叠在最下层
+        ImageView bgImageView = new ImageView(ImageManger.pauseBackground);
+        bgImageView.setFitWidth(Main.sceneWid);
+        bgImageView.setFitHeight(Main.sceneHei);
+        bgImageView.setPreserveRatio(false); // 拉伸填充
 
-        Pane root = new Pane( mediaView,text, btn1, btn2, checkBoxGamer,checkBox);
+        Pane root = new Pane( bgImageView,mediaView,text, btn1, btn2, checkBoxGamer,checkBox);
         mediaView.fitWidthProperty().bind(root.widthProperty());
         mediaView.fitHeightProperty().bind(root.heightProperty());
         mediaView.setPreserveRatio(false);

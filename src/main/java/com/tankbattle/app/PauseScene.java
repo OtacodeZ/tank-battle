@@ -34,7 +34,12 @@ public class PauseScene {
         imageView.setLayoutX(280);
         imageView.setLayoutY(280);
 
-        Group root=new Group(btn1,text,imageView);
+        ImageView bgImageView = new ImageView(ImageManger.pauseBackground);
+        bgImageView.setFitWidth(Main.sceneWid);
+        bgImageView.setFitHeight(Main.sceneHei);
+        bgImageView.setPreserveRatio(false); // 拉伸填充
+
+        Group root=new Group(bgImageView,btn1,text,imageView);
         scene=new Scene(root,Main.sceneWid,Main.sceneHei);
     }
 

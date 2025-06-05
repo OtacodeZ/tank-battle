@@ -16,4 +16,6 @@ public class ImageManger {
     public static final Image enemy=new Image(ImageManger.class.getResource(ENEMY_IMG).toExternalForm(),0, 0, true, true, false);
 
     public static final Image tutorial=new Image(ImageManger.class.getResource("/images/tutorial.png").toExternalForm());
+    public static final Image pauseBackground=new Image(ImageManger.class.getResource("/images/pausePageBackground.jpg").toExternalForm());
+
 }
