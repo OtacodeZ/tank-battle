@@ -21,7 +21,7 @@ public class ChangeConfigScene {
 
         //HP
         Text textHP=new Text("玩家初始HP:");
-        Slider sliderHP = new Slider(0, 200, 100);
+        Slider sliderHP = new Slider(0, 200, 20);
         sliderHP.setShowTickLabels(true);   // 显示数字标签（如50）
         sliderHP.setShowTickMarks(true);   // 显示刻度线
         sliderHP.setMajorTickUnit(10);     // 每10一格
@@ -77,14 +77,26 @@ public class ChangeConfigScene {
 
         });
 
+        //distance of view
+        Text textDistance=new Text("敌人视野半径");
+        Slider sliderDistance=new Slider(100,400,200);
+        sliderDistance.setShowTickLabels(true);
+        sliderDistance.setShowTickMarks(true);
+        sliderDistance.setMajorTickUnit(10);
+        sliderDistance.setMinorTickCount(4);
+        sliderDistance.setBlockIncrement(1);
+        sliderDistance.valueProperty().addListener((observable, oldValue, newValue) -> {
+            GameConfig.SEE_DISTANCE = newValue.intValue() ;
 
+        });
 
 
         VBox root=new VBox(btn1,textHP,sliderHP,
                 textSpeedGamer, sliderSpeedGamer,
                 textSpeedE,sliderSpeedE,
                 textBulletCoolGamer, sliderBulletCoolGamer,
-                textBulletCoolE, sliderBulletCoolE);
+                textBulletCoolE, sliderBulletCoolE,
+                textDistance,sliderDistance);
         scene = new Scene(root, Main.sceneWid, Main.sceneHei);
     }
     public Scene getScene() {

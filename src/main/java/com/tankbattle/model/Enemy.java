@@ -14,7 +14,6 @@ public class Enemy extends Tank implements Collidable{
     private long lastFireTimeE =0;
     private int enemySeetank=0;
     private int enemyInitHP= GameConfig.ENEMY_HP_INIT;
-    private static double seeDistance=GameConfig.SEE_DISTANCE;//视野范围
     public static String ifOnpenViewCycle="no";//是否可视化enemy的索敌圈，若是，改为“on”
 
     protected Enemy(int x, int y, double width, Image image, int speed) {
@@ -40,7 +39,7 @@ public class Enemy extends Tank implements Collidable{
             gc.setLineDashes(10.0, 10.0);
             gc.setStroke(Color.RED);
             gc.setLineWidth(1);
-            gc.strokeOval(-200, -200, 400, 400);
+            gc.strokeOval(GameConfig.SEE_DISTANCE*-1, GameConfig.SEE_DISTANCE*-1, GameConfig.SEE_DISTANCE*2, GameConfig.SEE_DISTANCE*2);
         }
         gc.restore();
 
@@ -96,12 +95,12 @@ public class Enemy extends Tank implements Collidable{
 
         if( (Math.pow(tank1.getX()-this.x,2)
                 +
-                Math.pow(tank1.getY()-this.y,2))<seeDistance){
+                Math.pow(tank1.getY()-this.y,2))<Math.pow(GameConfig.SEE_DISTANCE,2)){
             enemySeetank=1;
 
         }else if( (Math.pow(tank2.getX()-this.x,2)
                 +
-                Math.pow(tank2.getY()-this.y,2) )<seeDistance){
+                Math.pow(tank2.getY()-this.y,2) )<Math.pow(GameConfig.SEE_DISTANCE,2)){
             enemySeetank=2;
 
         } else {
