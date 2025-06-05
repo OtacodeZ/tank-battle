@@ -1,8 +1,10 @@
 package com.tankbattle.app;
 
+import com.tankbattle.config.ImageManger;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -26,7 +28,13 @@ public class PauseScene {
             stage.setScene(gameScene.getHomeScene());
             gameScene.start();
         });
-        Group root=new Group(btn1,text);
+        ImageView imageView = new ImageView(ImageManger.tutorial);
+        imageView.setFitWidth(400);
+        imageView.setPreserveRatio(true);
+        imageView.setLayoutX(280);
+        imageView.setLayoutY(280);
+
+        Group root=new Group(btn1,text,imageView);
         scene=new Scene(root,Main.sceneWid,Main.sceneHei);
     }
 
