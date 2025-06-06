@@ -1,9 +1,12 @@
 package com.tankbattle.app;
 
 import com.tankbattle.config.GameConfig;
+import com.tankbattle.config.ImageManger;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -89,13 +92,20 @@ public class ChangeConfigScene {
 
         });
 
+        ImageView bgImageView = new ImageView(ImageManger.pauseBackground);
+        bgImageView.setFitWidth(Main.sceneWid);
+        bgImageView.setFitHeight(Main.sceneHei);
+        bgImageView.setPreserveRatio(false); // 拉伸填充
 
-        VBox root=new VBox(btn1,textHP,sliderHP,
+
+        VBox rootOfitems =new VBox(btn1,textHP,sliderHP,
                 textSpeedGamer, sliderSpeedGamer,
                 textSpeedE,sliderSpeedE,
                 textBulletCoolGamer, sliderBulletCoolGamer,
                 textBulletCoolE, sliderBulletCoolE,
                 textDistance,sliderDistance);
+
+        StackPane root=new StackPane(bgImageView,rootOfitems);
         scene = new Scene(root, Main.sceneWid, Main.sceneHei);
     }
     public Scene getScene() {

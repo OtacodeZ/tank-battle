@@ -37,6 +37,7 @@ public class Main extends Application {
         // --- 开始界面 ---
 
         CheckBox checkBox = new CheckBox("可视化敌人视野");
+        checkBox.setTextFill(Color.RED);
         checkBox.setLayoutX(420);
         checkBox.setLayoutY(400);
         checkBox.setOnAction(e -> {
@@ -49,6 +50,7 @@ public class Main extends Application {
         CheckBox checkBoxGamer = new CheckBox("双人模式");
         checkBoxGamer.setLayoutX(420);
         checkBoxGamer.setLayoutY(420);
+        checkBoxGamer.setTextFill(Color.RED);
         checkBoxGamer.setOnAction(e -> {
 
             if (checkBoxGamer.isSelected()) {
