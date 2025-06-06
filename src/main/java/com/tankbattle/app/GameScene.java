@@ -1,10 +1,7 @@
 package com.tankbattle.app;
 
 import com.tankbattle.config.GameConfig;
-import com.tankbattle.model.CollisionManager;
-import com.tankbattle.model.EnemyManager;
-import com.tankbattle.model.TankGamerA;
-import com.tankbattle.model.TankGamerB;
+import com.tankbattle.model.*;
 import com.tankbattle.ui.Background;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
@@ -22,6 +19,7 @@ import com.tankbattle.config.AudioPath;
 import com.tankbattle.config.ImageManger;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 //
@@ -128,7 +126,9 @@ public class GameScene {
         return homeScene;
     }
 
+    public int gameCount=0;//记录是第几次开始游戏
     public void start() {
+        gameCount++;
         bgmPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         bgmPlayer.setVolume(0.3);
 
@@ -161,6 +161,27 @@ public class GameScene {
 
             canvas.setHeight(newVal.doubleValue());
         });
+    }
+
+    public void restartGame(){
+        bgmPlayer.play();
+        tankGamerA.HP.set(GameConfig.GAMER_HP_INIT.get());
+        tankGamerB.HP.set(GameConfig.GAMER_HP_INIT.get());
+        tankGamerA.speed=GameConfig.GAMER_SPEED.get();
+        tankGamerB.speed=GameConfig.GAMER_SPEED.get();
+        tankGamerA.setXY(150,400);
+        tankGamerB.setXY(850,400);
+        if(GameConfig.GAMER_COUNT.equalsIgnoreCase("one")){
+            tankGamerB.HP.set(-1);
+        }
+
+        Iterator<Enemy> iterator=EnemyManager.enemies.iterator();
+        while (iterator.hasNext()){
+            Enemy enemy=iterator.next();
+            iterator.remove();
+            CollisionManager.collidables.remove(enemy);
+        }
+        gameLoop.start();
     }
 
 }

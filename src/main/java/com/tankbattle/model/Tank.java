@@ -45,6 +45,8 @@ public abstract class Tank extends Rectangle {
 
     final List<Bullet> bullets = new ArrayList<>();
 
-
+    public void setXY(int x,int y){
+        this.x=x;this.y=y;
+    }
 
 }

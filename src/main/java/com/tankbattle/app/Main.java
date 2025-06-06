@@ -84,7 +84,12 @@ public class Main extends Application {
 
         btn1.setOnAction(e -> {
             primaryStage.setScene(gameScene.getHomeScene());
-            gameScene.start();
+            if(gameScene.gameCount<=0){
+                gameScene.start();
+            }else {
+             gameScene.restartGame();
+            }
+
             mediaStartBgPlayer.stop();
         });
 
