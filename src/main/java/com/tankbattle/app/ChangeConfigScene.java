@@ -38,11 +38,12 @@ public class ChangeConfigScene {
         Slider sliderSpeedGamer = new Slider(0, 20, 10);
         sliderSpeedGamer.setShowTickLabels(true);
         sliderSpeedGamer.setShowTickMarks(true);
+        sliderSpeedGamer.setMajorTickUnit(1);
         sliderSpeedGamer.setMinorTickCount(4);
         sliderSpeedGamer.setBlockIncrement(1);
         GameConfig.GAMER_SPEED.bindBidirectional(sliderSpeedGamer.valueProperty());
 
-        Text textSpeedE=new Text("玩家速度：");
+        Text textSpeedE=new Text("敌人速度：");
         Slider sliderSpeedE = new Slider(0, 20, 1);
         sliderSpeedE.setShowTickLabels(true);
         sliderSpeedE.setShowTickMarks(true);
@@ -57,7 +58,7 @@ public class ChangeConfigScene {
         Slider sliderBulletCoolGamer = new Slider(100, 2000, 500); // 100ms 到 2000ms（即0.1s到2s）
         sliderBulletCoolGamer.setShowTickLabels(true);
         sliderBulletCoolGamer.setShowTickMarks(true);
-        sliderBulletCoolGamer.setMajorTickUnit(500); // 每500ms一格
+        sliderBulletCoolGamer.setMajorTickUnit(100); // 每500ms一格
         sliderBulletCoolGamer.setMinorTickCount(4);
         sliderBulletCoolGamer.setBlockIncrement(50);
 
