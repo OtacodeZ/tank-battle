@@ -98,14 +98,20 @@ public class GameScene {
                 enemyManager.update(now,tankGamerA,tankGamerB,Main.sceneWid,Main.sceneHei);
                 sizeChangeable(stage,canvas);
 
+
+                //pause Scene
                 if(keysPressed.contains(KeyCode.ESCAPE)){
                     keysPressed.remove(KeyCode.ESCAPE);
                     bgmPlayer.pause();
                     gameLoop.stop();
                     pauseScene.change();
                     stage.setScene(pauseScene.getSene());
-
-
+                }
+                //end Scene
+                if(tankGamerA.HP.get()<=0&&tankGamerB.HP.get()<=0){
+                    this.stop();
+                    YouDieScene youDieScene=new YouDieScene(stage,startScene);
+                    stage.setScene(youDieScene.getScene());
                 }
             }
 

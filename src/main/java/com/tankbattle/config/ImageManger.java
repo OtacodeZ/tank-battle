@@ -17,5 +17,6 @@ public class ImageManger {
 
     public static final Image tutorial=new Image(ImageManger.class.getResource("/images/tutorial.png").toExternalForm());
     public static final Image pauseBackground=new Image(ImageManger.class.getResource("/images/pausePageBackground.jpg").toExternalForm());
+    public static final Image dieBG=new Image(ImageManger.class.getResource("/images/dieBG.png").toExternalForm());
 
 }
