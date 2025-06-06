@@ -164,7 +164,6 @@ public class GameScene {
     }
 
     public void restartGame(){
-        bgmPlayer.play();
         tankGamerA.HP.set(GameConfig.GAMER_HP_INIT.get());
         tankGamerB.HP.set(GameConfig.GAMER_HP_INIT.get());
         tankGamerA.speed=GameConfig.GAMER_SPEED.get();
@@ -178,9 +177,11 @@ public class GameScene {
         Iterator<Enemy> iterator=EnemyManager.enemies.iterator();
         while (iterator.hasNext()){
             Enemy enemy=iterator.next();
+            enemy.HP.set(0);
             iterator.remove();
             CollisionManager.collidables.remove(enemy);
         }
+        bgmPlayer.play();
         gameLoop.start();
     }
 
