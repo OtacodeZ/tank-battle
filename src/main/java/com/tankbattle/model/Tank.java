@@ -8,6 +8,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public abstract class Tank extends Rectangle {
@@ -43,7 +44,18 @@ public abstract class Tank extends Rectangle {
         }
     }
 
+
     final List<Bullet> bullets = new ArrayList<>();
+
+    public void clearBullet(){
+        Iterator<Bullet> iterator=bullets.iterator();
+        while (iterator.hasNext()){
+            Bullet bullet=iterator.next();
+            iterator.remove();
+            CollisionManager.collidables.remove(bullet);
+        }
+    }
+
 
     public void setXY(int x,int y){
         this.x=x;this.y=y;

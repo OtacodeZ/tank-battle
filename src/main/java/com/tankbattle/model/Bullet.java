@@ -67,8 +67,8 @@ public class Bullet extends Rectangle implements Collidable{
     }
 
     public boolean isOffScreen(int screenX,int screenY) {
-        if( x<0||
-                y<0||
+        if( x<-10||
+                y<-10||
                 x>screenX||
                 y>screenY){
 
