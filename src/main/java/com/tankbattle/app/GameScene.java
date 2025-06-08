@@ -31,6 +31,8 @@ public class GameScene {
     TankGamerA tankGamerA=new TankGamerA(150,400,50, ImageManger.tankGamerA, GameConfig.GAMER_SPEED.get());
     TankGamerB tankGamerB=new TankGamerB(850,400,50,ImageManger.tankGamerB,GameConfig.GAMER_SPEED.get());
 
+    private  Set<KeyCode> keysPressed;
+
     //bgm
     Media bgmMedia = new Media(AudioPath.BGM);
     MediaPlayer bgmPlayer = new MediaPlayer(bgmMedia);
@@ -74,7 +76,7 @@ public class GameScene {
 
         //interactKeyboard();
 
-        Set<KeyCode> keysPressed = new HashSet<>();
+       keysPressed = new HashSet<>();
         homeScene.setOnKeyPressed(event ->
                 keysPressed.add(event.getCode()));
         homeScene.setOnKeyReleased(event ->
@@ -103,13 +105,16 @@ public class GameScene {
                 if(keysPressed.contains(KeyCode.ESCAPE)){
                     keysPressed.remove(KeyCode.ESCAPE);
                     bgmPlayer.pause();
+                    keysPressed.clear();
                     gameLoop.stop();
                     pauseScene.change();
                     stage.setScene(pauseScene.getSene());
                 }
                 //end Scene
                 if(tankGamerA.HP.get()<=0&&tankGamerB.HP.get()<=0){
-                    this.stop();
+                    bgmPlayer.stop();
+                    keysPressed.clear();
+                    gameLoop.stop();
                     YouDieScene youDieScene=new YouDieScene(stage,startScene);
                     stage.setScene(youDieScene.getScene());
                 }
@@ -153,6 +158,8 @@ public class GameScene {
 
     public void stop() {
         bgmPlayer.stop();
+        keysPressed.clear();
+        System.out.println("key:"+keysPressed);
         gameLoop.stop();
     }
 
