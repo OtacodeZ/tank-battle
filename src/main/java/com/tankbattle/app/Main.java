@@ -1,5 +1,4 @@
 package com.tankbattle.app;
-
 import com.tankbattle.config.GameConfig;
 import com.tankbattle.config.ImageManger;
 import com.tankbattle.model.Enemy;
@@ -21,13 +20,15 @@ import com.tankbattle.config.VedioUrl;
 
 public class Main extends Application {
 
-    public static int sceneWid = 960;
-    public static int sceneHei = 540;
-
+     public static int sceneWid=960;
+     public static int sceneHei=540;
+//hbhjbib
     private Stage primaryStage;
     private Scene startScene;
     private GameScene gameScene;
     private ChangeConfigScene changeConfigScene;
+
+    private static MediaPlayer mediaStartBgPlayer;
 
     @Override
     public void start(Stage stage) {
@@ -41,9 +42,9 @@ public class Main extends Application {
         checkBox.setLayoutY(400);
         checkBox.setOnAction(e -> {
             if (checkBox.isSelected()) {
-                Enemy.ifOnpenViewCycle = "on";
+                Enemy.ifOnpenViewCycle="on";
             } else {
-                Enemy.ifOnpenViewCycle = "no";
+                Enemy.ifOnpenViewCycle="no";
             }
         });
         CheckBox checkBoxGamer = new CheckBox("双人模式");
@@ -53,18 +54,18 @@ public class Main extends Application {
         checkBoxGamer.setOnAction(e -> {
 
             if (checkBoxGamer.isSelected()) {
-                GameConfig.GAMER_COUNT = "two";
+                GameConfig.GAMER_COUNT="two";
             } else {
-                GameConfig.GAMER_COUNT = "one";
+                GameConfig.GAMER_COUNT="one";
             }
         });
 
-        Media mediaStartBg = new Media(VedioUrl.mediaUrl);
-        MediaPlayer mediaStartBgPlayer = new MediaPlayer(mediaStartBg);
+        Media mediaStartBg=new Media(VedioUrl.mediaUrl);
+        mediaStartBgPlayer = new MediaPlayer(mediaStartBg);
 
         MediaView mediaView = new MediaView(mediaStartBgPlayer);
 
-        Text text = new Text("坦克大战");
+        Text text=new Text("坦克大战");
         text.setLayoutX(420);
         text.setLayoutY(200);
         text.setFont(Font.font(30));
@@ -83,10 +84,10 @@ public class Main extends Application {
 
         btn1.setOnAction(e -> {
             primaryStage.setScene(gameScene.getHomeScene());
-            if (gameScene.gameCount <= 0) {
+            if(gameScene.gameCount<=0){
                 gameScene.start();
-            } else {
-                gameScene.restartGame();
+            }else {
+             gameScene.restartGame();
             }
 
             mediaStartBgPlayer.stop();
@@ -102,7 +103,7 @@ public class Main extends Application {
         bgImageView.setFitHeight(Main.sceneHei);
         bgImageView.setPreserveRatio(false); // 拉伸填充
 
-        Pane root = new Pane(bgImageView, mediaView, text, btn1, btn2, checkBoxGamer, checkBox);
+        Pane root = new Pane( bgImageView,mediaView,text, btn1, btn2, checkBoxGamer,checkBox);
         mediaView.fitWidthProperty().bind(root.widthProperty());
         mediaView.fitHeightProperty().bind(root.heightProperty());
         mediaView.setPreserveRatio(false);
@@ -110,8 +111,9 @@ public class Main extends Application {
         startScene = new Scene(root, sceneWid, sceneHei);
 
         // 初始化两个模式
-        gameScene = new GameScene(primaryStage, startScene);
-        changeConfigScene = new ChangeConfigScene(primaryStage, startScene);
+        gameScene = new GameScene(primaryStage,startScene);
+        changeConfigScene = new ChangeConfigScene(primaryStage,startScene);
+
 
 
         // 设置初始界面
@@ -124,11 +126,18 @@ public class Main extends Application {
             mediaStartBgPlayer.play();
         });
 
+
+
+
     }
 
     public static void main(String[] args) {
         launch(args);
     }
+    public static void mediaPlay(){
+        mediaStartBgPlayer.play();
+    }
+
 
 
 }
