@@ -20,11 +20,9 @@ import com.tankbattle.config.VedioUrl;
 
 public class Main extends Application {
 
-
-
      public static int sceneWid=960;
      public static int sceneHei=540;
-
+//hbhjbib
     private Stage primaryStage;
     private Scene startScene;
     private GameScene gameScene;
