@@ -38,6 +38,7 @@ public class PauseScene {
         btn2.setOnAction(e -> {
             gameScene.stop();
             stage.setScene(startScene);
+            Main.mediaPlay();
 
         });
         ImageView imageView = new ImageView(ImageManger.tutorial);

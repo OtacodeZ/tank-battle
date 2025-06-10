@@ -40,7 +40,9 @@ public class YouDieScene {
         this.scene=new Scene(root,Main.sceneWid,Main.sceneHei);
 
         scene.setOnKeyPressed(e -> {
-            stage.setScene(startScene);});
+            stage.setScene(startScene);
+            Main.mediaPlay();});
+
     }
     public Scene getScene(){
         return this.scene;

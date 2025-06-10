@@ -28,6 +28,8 @@ public class Main extends Application {
     private GameScene gameScene;
     private ChangeConfigScene changeConfigScene;
 
+    private static MediaPlayer mediaStartBgPlayer;
+
     @Override
     public void start(Stage stage) {
         this.primaryStage = stage;
@@ -59,7 +61,7 @@ public class Main extends Application {
         });
 
         Media mediaStartBg=new Media(VedioUrl.mediaUrl);
-        MediaPlayer mediaStartBgPlayer = new MediaPlayer(mediaStartBg);
+        mediaStartBgPlayer = new MediaPlayer(mediaStartBg);
 
         MediaView mediaView = new MediaView(mediaStartBgPlayer);
 
@@ -125,12 +127,16 @@ public class Main extends Application {
         });
 
 
+
+
     }
 
     public static void main(String[] args) {
         launch(args);
     }
-
+    public static void mediaPlay(){
+        mediaStartBgPlayer.play();
+    }
 
 
 
