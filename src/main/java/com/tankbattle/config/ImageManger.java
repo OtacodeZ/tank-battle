@@ -19,4 +19,7 @@ public class ImageManger {
     public static final Image pauseBackground=new Image(ImageManger.class.getResource("/images/pausePageBackground.jpg").toExternalForm());
     public static final Image dieBG=new Image(ImageManger.class.getResource("/images/dieBG.png").toExternalForm());
 
+    //healthPack
+    public static final Image hp =new Image(ImageManger.class.getResource(
+            "/images/hp.png").toExternalForm(),0, 0, true, true, false);
 }
