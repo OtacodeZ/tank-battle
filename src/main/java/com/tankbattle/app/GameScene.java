@@ -34,6 +34,7 @@ public class GameScene {
 
     private  Set<KeyCode> keysPressed;
 
+    Group root;
     //bgm
     Media bgmMedia = new Media(AudioPath.BGM);
     MediaPlayer bgmPlayer = new MediaPlayer(bgmMedia);
@@ -65,7 +66,7 @@ public class GameScene {
         Background bg=new Background();
         Canvas canvas=new Canvas(Main.sceneWid,Main.sceneHei);
         GraphicsContext gc=canvas.getGraphicsContext2D();
-        Group root = new Group(canvas);
+        root = new Group(canvas);
 
         //hp
         Text hpA =new Text();
@@ -76,15 +77,7 @@ public class GameScene {
         hpA.setY(20);
         root.getChildren().add(hpA);
 
-        if(GameConfig.GAMER_COUNT.equalsIgnoreCase("two")){
-            Text hpB =new Text();
-            hpB.textProperty().bind(
-                    Bindings.concat("TankB HP :", tankGamerB.HP.asString())
-            );
-            hpB.setX(0);
-            hpB.setY(40);
-            root.getChildren().add(hpB);
-        }
+
 
 //
 
@@ -219,6 +212,16 @@ public class GameScene {
             tankGamerB.HP.set(-1);
         }
 
+        if(GameConfig.GAMER_COUNT.equalsIgnoreCase("two")){
+            Text hpB =new Text();
+            hpB.textProperty().bind(
+                    Bindings.concat("TankB HP :", tankGamerB.HP.asString())
+            );
+            hpB.setX(0);
+            hpB.setY(40);
+            root.getChildren().add(hpB);
+        }
+
         // 清理旧的血包
         healthPacks.clear();
         CollisionManager.collidables.removeAll(healthPacks);
@@ -273,6 +276,22 @@ public class GameScene {
             enemy.HP.set(0);
             iterator.remove();
             CollisionManager.collidables.remove(enemy);
+        }
+
+        // 确保碰撞管理器中的对象被正确清理
+        CollisionManager.collidables.removeIf(collidable ->
+                collidable instanceof Enemy ||collidable instanceof Bullet||collidable instanceof HealthPack||collidable instanceof Bomb
+
+        );
+
+        if(GameConfig.GAMER_COUNT.equalsIgnoreCase("two")){
+            Text hpB =new Text();
+            hpB.textProperty().bind(
+                    Bindings.concat("TankB HP :", tankGamerB.HP.asString())
+            );
+            hpB.setX(0);
+            hpB.setY(40);
+            root.getChildren().add(hpB);
         }
 
         // Clear old health packs
