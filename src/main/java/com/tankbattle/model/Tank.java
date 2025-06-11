@@ -45,7 +45,7 @@ public abstract class Tank extends Rectangle {
     }
 
 
-    final List<Bullet> bullets = new ArrayList<>();
+    public final List<Bullet> bullets = new ArrayList<>();
 
     public void clearBullet(){
         Iterator<Bullet> iterator=bullets.iterator();

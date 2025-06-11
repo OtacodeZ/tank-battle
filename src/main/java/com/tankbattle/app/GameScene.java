@@ -17,7 +17,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import com.tankbattle.config.AudioPath;
 import com.tankbattle.config.ImageManger;
+import com.tankbattle.model.TankGamerB;
 
+import com.tankbattle.model.TankGamerA;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -28,11 +30,12 @@ public class GameScene {
     private AnimationTimer gameLoop;
     private Stage stage;
     private String ifGenerateTankB="yes";
-    TankGamerA tankGamerA=new TankGamerA(150,400,50, ImageManger.tankGamerA, GameConfig.GAMER_SPEED.get());
-    TankGamerB tankGamerB=new TankGamerB(850,400,50,ImageManger.tankGamerB,GameConfig.GAMER_SPEED.get());
+    private TankGamerA tankGamerA=new TankGamerA(150,400,50, ImageManger.tankGamerA, GameConfig.GAMER_SPEED.get());
+    private TankGamerB tankGamerB=new TankGamerB(850,400,50,ImageManger.tankGamerB,GameConfig.GAMER_SPEED.get());
 
     private  Set<KeyCode> keysPressed;
 
+    Group root;
     //bgm
     Media bgmMedia = new Media(AudioPath.BGM);
     MediaPlayer bgmPlayer = new MediaPlayer(bgmMedia);
@@ -49,7 +52,7 @@ public class GameScene {
         Background bg=new Background();
         Canvas canvas=new Canvas(Main.sceneWid,Main.sceneHei);
         GraphicsContext gc=canvas.getGraphicsContext2D();
-        Group root = new Group(canvas);
+         root = new Group(canvas);
 
         //hp
         Text hpA =new Text();
@@ -60,15 +63,7 @@ public class GameScene {
         hpA.setY(20);
         root.getChildren().add(hpA);
 
-        if(GameConfig.GAMER_COUNT.equalsIgnoreCase("two")){
-            Text hpB =new Text();
-            hpB.textProperty().bind(
-                    Bindings.concat("TankB HP :", tankGamerB.HP.asString())
-            );
-            hpB.setX(0);
-            hpB.setY(40);
-            root.getChildren().add(hpB);
-        }
+
 
 //
 
@@ -151,6 +146,15 @@ public class GameScene {
         if(GameConfig.GAMER_COUNT.equalsIgnoreCase("one")){
             tankGamerB.HP.set(-1);
         }
+        if(GameConfig.GAMER_COUNT.equalsIgnoreCase("two")){
+            Text hpB =new Text();
+            hpB.textProperty().bind(
+                    Bindings.concat("TankB HP :", tankGamerB.HP.asString())
+            );
+            hpB.setX(0);
+            hpB.setY(40);
+            root.getChildren().add(hpB);
+        }
 
         bgmPlayer.play();
         gameLoop.start();
@@ -197,6 +201,12 @@ public class GameScene {
             iterator.remove();
             CollisionManager.collidables.remove(enemy);
         }
+
+        // 确保碰撞管理器中的对象被正确清理
+        CollisionManager.collidables.removeIf(collidable ->
+                collidable instanceof Enemy ||
+                        (collidable instanceof Bullet && !tankGamerA.bullets.contains(collidable) && !tankGamerB.bullets.contains(collidable))
+        );
 
         System.out.println("after clear:"+EnemyManager.enemies);
         bgmPlayer.play();
