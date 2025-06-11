@@ -114,7 +114,8 @@ public class TankGamerB extends Tank implements Collidable{
             case ENEMY:
                 x=oldX;y=oldY;break;
             case BULLET:this.HP.set(this.HP.get()-Bullet.damage);break;
-            case HEALTHPACK:this.HP.set(this.HP.get()+HealthPack.hp);
+            case HEALTHPACK:this.HP.set(this.HP.get()+HealthPack.hp);break;
+            case BOMB: this.HP.set(this.HP.get() - Bomb.hurt);
         }
     }
 
@@ -126,16 +127,5 @@ public class TankGamerB extends Tank implements Collidable{
     @Override
     public Collidable getOwner() {
         return null;
-    }
-    public int getHP() {
-        return HP.get();
-    }
-
-    public void setHP(int hp) {
-        this.HP.set(hp);
-    }
-
-    public void addHP(int hp) {
-        this.HP.set(this.HP.get() + hp);
     }
 }

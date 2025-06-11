@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import com.tankbattle.config.AudioPath;
 import com.tankbattle.config.ImageManger;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -36,6 +37,21 @@ public class GameScene {
     //bgm
     Media bgmMedia = new Media(AudioPath.BGM);
     MediaPlayer bgmPlayer = new MediaPlayer(bgmMedia);
+
+    // Blood packs
+    private final ArrayList<HealthPack> healthPacks = new ArrayList<>();
+    private long lastHealthPackSpawnTime = 0;
+    private final long HEALTH_PACK_INTERVAL = 8_000_000_000L; // 每8秒生成一个
+    private final int MAX_HEALTH_PACKS = 1;
+
+    //bomb
+    private final ArrayList<Bomb> bombs = new ArrayList<>();
+    private int[][] bombSpawnPositions ={
+            {100,100},
+            {500,100},
+            {900,100}
+    };
+
     public GameScene(Stage stage,Scene startScene) {
         this.stage=stage;
 
@@ -76,7 +92,7 @@ public class GameScene {
 
         //interactKeyboard();
 
-       keysPressed = new HashSet<>();
+        keysPressed = new HashSet<>();
         homeScene.setOnKeyPressed(event ->
                 keysPressed.add(event.getCode()));
         homeScene.setOnKeyReleased(event ->
@@ -100,6 +116,51 @@ public class GameScene {
                 enemyManager.update(now,tankGamerA,tankGamerB,Main.sceneWid,Main.sceneHei);
                 sizeChangeable(stage,canvas);
 
+                // 生成血包
+                if (now - lastHealthPackSpawnTime > HEALTH_PACK_INTERVAL) {
+                    if (healthPacks.size() < MAX_HEALTH_PACKS) {
+                        int x = (int) (Math.random() * Main.sceneWid);
+                        int y = (int) (Math.random() * Main.sceneHei);
+                        healthPacks.add(new HealthPack(x, y,
+                                ImageManger.hp, null));
+                         // 添加到碰撞管理器
+                        lastHealthPackSpawnTime = now;
+                    }
+                }
+
+                // 移除已使用的血包
+                Iterator<HealthPack> iterator = healthPacks.iterator();
+                while (iterator.hasNext()) {
+
+                    HealthPack healthPack = iterator.next();
+                    if (healthPack.isUsed()) {
+                        System.out.println("x");
+                        iterator.remove(); // 使用迭代器的 remove 方法
+                        System.out.println("bef:"+
+                        CollisionManager.collidables);
+                        CollisionManager.collidables.remove(healthPack);
+                        System.out.println("af:"+CollisionManager.collidables);
+                    }
+                }
+
+                //初始化炸弹
+                if (bombs.isEmpty()) {
+                    for (int[] position : bombSpawnPositions) {
+                        int x = position[0];
+                        int y = position[1];
+                        bombs.add(new Bomb(x, y, ImageManger.bomb, null));
+                    }
+                }
+
+                //移除炸弹
+                Iterator<Bomb> bombIterator = bombs.iterator();
+                while (bombIterator.hasNext()) {
+                    Bomb bomb = bombIterator.next();
+                    if (bomb.isDestroyed()) {
+                        bombIterator.remove();
+                        CollisionManager.collidables.remove(bomb);
+                    }
+                }
 
                 //pause Scene
                 if(keysPressed.contains(KeyCode.ESCAPE)){
@@ -128,7 +189,13 @@ public class GameScene {
                 tankGamerA.draw(gc,stage);
                 tankGamerB.draw(gc,stage);
                 enemyManager.draw(gc,stage);
-
+                //healthPack
+                for (HealthPack hp : healthPacks) {
+                    hp.draw(gc, stage);
+                }
+                for (Bomb bomb : bombs) {
+                    bomb.draw(gc,stage);
+                }
             }
         };
     }
@@ -151,6 +218,16 @@ public class GameScene {
         if(GameConfig.GAMER_COUNT.equalsIgnoreCase("one")){
             tankGamerB.HP.set(-1);
         }
+
+        // 清理旧的血包
+        healthPacks.clear();
+        CollisionManager.collidables.removeAll(healthPacks);
+
+        // 重置血包生成时间
+        lastHealthPackSpawnTime = 0;
+
+        bombs.clear();
+        CollisionManager.collidables.removeAll(bombs);
 
         bgmPlayer.play();
         gameLoop.start();
@@ -197,6 +274,16 @@ public class GameScene {
             iterator.remove();
             CollisionManager.collidables.remove(enemy);
         }
+
+        // Clear old health packs
+        healthPacks.clear();
+        CollisionManager.collidables.removeAll(healthPacks);
+
+        // Reset last health pack spawn time
+        lastHealthPackSpawnTime = 0;
+
+        bombs.clear();
+        CollisionManager.collidables.removeAll(bombs);
 
         System.out.println("after clear:"+EnemyManager.enemies);
         bgmPlayer.play();

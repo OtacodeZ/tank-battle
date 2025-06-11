@@ -22,4 +22,7 @@ public class ImageManger {
     //healthPack
     public static final Image hp =new Image(ImageManger.class.getResource(
             "/images/hp.png").toExternalForm(),0, 0, true, true, false);
+    //Bomb
+    public static final Image bomb =new Image(ImageManger.class.getResource(
+            "/images/bomb.png").toExternalForm(),0, 0, true, true, false);
 }

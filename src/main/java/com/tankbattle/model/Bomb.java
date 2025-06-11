@@ -1,28 +1,21 @@
 package com.tankbattle.model;
 
-import com.tankbattle.app.GameScene;
 import com.tankbattle.app.Main;
-import com.tankbattle.config.GameConfig;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.media.AudioClip;
-import com.tankbattle.config.AudioPath;
-import com.tankbattle.config.ImageManger;
 import javafx.stage.Stage;
 
-public class HealthPack extends Rectangle implements Collidable {
+public class Bomb extends Rectangle implements Collidable {
     private Image image;
-    public static final int hp = 10; // 每个血包恢复的生命值
+    public static final int hurt = 5; // 每个炸弹的伤害
 
     @Override
     public Collidable getOwner() {
         return null;
     }
 
-    public HealthPack(int x, int y, Image image, Collidable owner) {
-        super(x, y, 50, 50 * image.getHeight() / image.getWidth());
+    public Bomb(int x, int y, Image image, Collidable owner) {
+        super(x, y, 30, 30 * image.getHeight() / image.getWidth());
         this.image = image;
 
 
@@ -45,11 +38,12 @@ public class HealthPack extends Rectangle implements Collidable {
     @Override
     public void onCollide(Collidable other) {
         switch (other.getType()){
-            case TANK :this.markAsUsed();break;  // 标记血包为“已使用”，等待 GameScene 中统一移除
+            case TANK :this.markAsDestroyed();break;  // 标记炸弹为“已使用”，等待 GameScene中统一移除
             case WALL:
             case ENEMY:
             case BULLET:
             case HEALTHPACK:
+            case BOMB:
         }
 
     }
@@ -61,17 +55,17 @@ public class HealthPack extends Rectangle implements Collidable {
 
     @Override
     public CollisionType getType() {
-        return CollisionType.HEALTHPACK;
+        return CollisionType.BOMB;
     }
 
-    // 标记血包为“已使用”
+    // 标记炸弹为“已使用”
     private boolean used = false;
 
-    private void markAsUsed() {
+    private void markAsDestroyed() {
         used = true;
     }
 
-    public boolean isUsed() {
+    public boolean isDestroyed() {
         return used;
     }
 }
